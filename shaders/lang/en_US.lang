@@ -77,7 +77,7 @@ screen.EXTRAS=Extras
 screen.ANIMATION=Animations
 
 #Settings
-option.ABOUT=§Voxels §fv§1.0.0§f
+option.ABOUT=§3Voxels §f§v1.0.0§f
 option.ABOUT.comment= Just a shader i made for fun
 value.ABOUT.0=by hotsuop
 
@@ -830,9 +830,8 @@ option.WORLD_TIME_ANIMATION.comment=Use ingame time for moving objects. §e[*]§
 
 option.ANIMATION_SPEED=Animation Speed
 option.ANIMATION_SPEED.comment=Adjusts animation speed.
-
+option.GLINT_B=test
 #Waving Blocks
-option.WAVING_GRASS=Grass
 option.WAVING_GRASS.comment=Allows grass to wave.
 
 option.WAVING_CROP=Crops

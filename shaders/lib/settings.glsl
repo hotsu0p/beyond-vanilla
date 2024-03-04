@@ -361,6 +361,7 @@ Please don't edit anything from Undefine section and onwards.
 
 //Animations//
 //#define WORLD_TIME_ANIMATION
+
   #define ANIMATION_SPEED 1.00 //[0.25 0.50 0.75 1.00 1.25 1.50 1.75 2.00 2.50 3.00 3.50 4.00 5.00 6.00 7.00 8.00]
   #define WAVING_GRASS
   #define WAVING_CROP
@@ -372,7 +373,7 @@ Please don't edit anything from Undefine section and onwards.
   #define WAVING_LAVA
   #define WAVING_FIRE
   #define WAVING_LANTERN
-
+  
 //Undefine//
   #ifdef NETHER
   #undef LIGHT_SHAFT

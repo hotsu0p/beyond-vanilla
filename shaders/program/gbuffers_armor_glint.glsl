@@ -1,7 +1,7 @@
 //Settings//
 #include "/lib/settings.glsl"
 
-//Fragment Shader///////////////////////////////////////////////////////////////////////////////////
+//Fragment Shader//
 #ifdef FSH
 
 //Varyings//
@@ -22,27 +22,21 @@ void main() {
     // Sample the texture and multiply it by the base color
     vec4 albedo = texture2D(texture, texCoord) * color;
 
-    // Basic rainbow glint effect using a sine wave for color cycling
-    float speed = time * 2.0; // Control the speed of the color cycling
+    // Calculate the glint effect based on some property, e.g., specular reflection
+    float glintIntensity = .05; // Adjust this value to control the intensity of the glint
+    vec3 glintEffect = vec3(glintIntensity);
 
-    // Generate a rainbow color based on a sine wave with different offsets for RGB channels
-    vec3 rainbowColor = vec3(
-        sin(speed) * 0.5 + 0.5,        // Red channel cycles with time
-        sin(speed + 2.0) * 0.5 + 0.5,  // Green channel, offset for color variation
-        sin(speed + 4.0) * 0.5 + 0.5   // Blue channel, further offset
-    );
+    // Apply the glint effect by adding it to the original color
+    // Note: This is a simple additive blend. You might want to use a more sophisticated method
+    albedo.rgb += glintEffect * albedo.rgb;
 
-    // Apply the rainbow glint by blending it slightly with the original color
-    float mixRatio = 0.3; // Adjust the mix ratio for subtlety
-    albedo.rgb = mix(albedo.rgb, rainbowColor, mixRatio);
-
-    // Output the final color with the rainbow glint
+    // Output the final color with the glint effect
     gl_FragData[0] = albedo;
 }
 
 #endif
 
-//Vertex Shader/////////////////////////////////////////////////////////////////////////////////////
+//Vertex Shader//
 #ifdef VSH
 
 //Varyings//
