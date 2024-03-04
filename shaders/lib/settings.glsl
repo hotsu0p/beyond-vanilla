@@ -32,7 +32,6 @@ Please don't edit anything from Undefine section and onwards.
   #define SHADOW_FILTER
   const float sunPathRotation = -40.0; //[-85.0 -80.0 -75.0 -70.0 -65.0 -60.0 -55.0 -50.0 -45.0 -40.0 -35.0 -30.0 -25.0 -20.0 -15.0 -10.0 -5.0 0.0 5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0 85.0]
   const float shadowMapBias = 1.0 - 25.6 / shadowDistance;
-
   #define SHADOW_ENTITY
   #define SHADOW_BLOCK_ENTITY
   #define SHADOW_VEGETATION

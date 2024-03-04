@@ -1,12 +1,12 @@
 #shaders/lang/en_us.lang
 
 #Profiles
-profile.MINIMUM=Minimum
-profile.LOW=Low
-profile.MEDIUM=Medium
-profile.HIGH=High
-profile.ULTRA=Ultra
-profile.comment=Minimum: no shadows, no extra effects. Low : low shadows, no extra effects. Medium : low-medium shadows, no extra effects. High : medium shadows, AO and light shafts. Ultra : high shadows, AO, and light shafts.
+profile.MINIMUM=§cMinimum
+profile.LOW=§4Low
+profile.MEDIUM=§aMedium
+profile.HIGH=§3High
+profile.ULTRA=§eUltra
+profile.comment=§cMinimum: no shadows, no extra effects. §4Low : Low shadows, no extra effects, Good for low to mid teir computers. §aMedium : low-medium shadows, no extra effects, For mid to high teir computers. §3High : Medium shadows, AO and light shafts, Higher performance than Ultra but still good visuals. §eUltra : high shadows, AO, and light shafts.
 
 #Screens
 screen.LIGHTING=Lighting
@@ -77,7 +77,7 @@ screen.EXTRAS=Extras
 screen.ANIMATION=Animations
 
 #Settings
-option.ABOUT=§3Voxels §f§v1.0.0§f
+option.ABOUT=§3Beyond Vanilla v1.0.1
 option.ABOUT.comment= Just a shader i made for fun
 value.ABOUT.0=by hotsuop
 

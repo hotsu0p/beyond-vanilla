@@ -298,34 +298,40 @@ void main() {
 		#endif
 	}
 
-	if(blockEntityId == 10401) {
-		vec2 portalCoord = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
-		portalCoord = (portalCoord - 0.5) * vec2(aspectRatio, 1.0);
+if (blockEntityId == 10401) {
+    vec2 portalCoord = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
+    portalCoord = (portalCoord - 0.5) * vec2(aspectRatio, 1.0);
 
-		vec3 portColSqrt = vec3(END_R, END_G, END_B) / 255.0 * END_I;
-		vec3 portCol = portColSqrt * portColSqrt * 0.05;
-		vec2 wind = vec2(0, frametime * 0.025);
+    vec3 portColSqrt = vec3(END_R, END_G, END_B) / 255.0 * END_I;
+    vec3 portCol = portColSqrt * portColSqrt * 0.05;
+    vec2 wind = vec2(0, frametime * 0.025);
 
-		float portal = texture2D(noisetex, portalCoord * 0.1 + wind * 0.05).r * 0.25 + 0.375;
+    float portal = texture2D(noisetex, portalCoord * 0.1 + wind * 0.05).r * 0.25 + 0.375;
 
-		#ifdef END
-			  portal *= 0.5;
-		#endif
-			  
-			  portal+= texture2D(texture, portalCoord * 0.5 + wind).r * 1.4;
-			  portal+= texture2D(texture, portalCoord + wind + 0.15).r;
-			  portal+= texture2D(texture, portalCoord * 2.0 + wind + 0.30).r * 0.7;
-			  portal+= texture2D(texture, portalCoord * 4.0 + wind + 0.45).r * 0.5;
-		
-		albedo.rgb = portal * portal * portCol.rgb;
-		albedo.a = 1.0;
+    // Add intermittent glow effect
+    float glowFactor = step(mod(frameTimeCounter, 2.0), 1.0);  // Glows every 2 seconds
+    portal += glowFactor * (sin(frameCounter * 0.1) * 0.2 + 0.2);  // Intermittent glow
 
-		lightAlbedo = normalize(albedo.rgb * 20.0 + 0.00001);
-		
-		#if ALPHA_BLEND == 0
-		albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
-		#endif
-	}
+    #ifdef END
+        portal *= 0.05;
+    #endif
+
+    portal += texture2D(texture, portalCoord * 0.5 + wind).r * 1.4;
+    portal += texture2D(texture, portalCoord + wind + 0.15).r;
+    portal += texture2D(texture, portalCoord * 2.0 + wind + 0.30).r * 0.7;
+    portal += texture2D(texture, portalCoord * 4.0 + wind + 0.45).r * 0.5;
+
+    albedo.rgb = portal * portal * portCol.rgb;
+    albedo.a = 100.0;
+
+    lightAlbedo = normalize(albedo.rgb * 20.0 + 0.00001);
+
+    #if ALPHA_BLEND == 0
+    albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
+    #endif
+}
+
+
 
     /* DRAWBUFFERS:0 */
     gl_FragData[0] = albedo;
