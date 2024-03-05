@@ -9,27 +9,28 @@ profile.ULTRA=§eUltra
 profile.comment=§cMinimum: no shadows, no extra effects. §4Low : Low shadows, no extra effects, Good for low to mid teir computers. §aMedium : low-medium shadows, no extra effects, For mid to high teir computers. §3High : Medium shadows, AO and light shafts, Higher performance than Ultra but still good visuals. §eUltra : high shadows, AO, and light shafts.
 
 #Screens
-screen.LIGHTING=Lighting
+screen.LIGHTING=§3Lighting
 screen.SHADOW_CONFIG=More Shadow Config
 screen.MCBL=Colored Blocklight Config
 
-screen.MATERIAL=Material
+screen.MATERIAL=§6Material
 screen.SPECULAR=Specular & Reflections
 screen.NORMALS=Normals & Parallax
 
-screen.ATMOSPHERICS=Atmospherics
+screen.ATMOSPHERICS=§3Atmospherics
 screen.SKY=Sky Config
 screen.CLOUDS=Cloud Config
 
-screen.WATER=Water
+screen.WATER=§6Water
 
-screen.CAMERA=Camera
+screen.CAMERA=§3Camera
 
-screen.ANTIALIASING=Anti-aliasing
+screen.ANTIALIASING=§6Anti-aliasing
 
-screen.COLOR=Color
+screen.COLOR=§3Color
+screen.END_COLOR=Test
 screen.LIGHT_COLOR=Lighting Color
-screen.LIGHT_M=Light (Morning)
+screen.LIGHT_M=Light (Morning) 
 screen.AMBIENT_M=Ambient (Morning)
 screen.LIGHT_D=Light (Day)
 screen.AMBIENT_D=Ambient (Day)
@@ -60,11 +61,12 @@ screen.NETHER_C=Crimson Forest
 screen.NETHER_W=Warped Forest
 screen.NETHER_B=Basalt Deltas
 screen.END_COLOR=End Color
+option.END_COLOR.END_R=TEst
 option.ARNIYRE_R=Red
 option.ARNIYRE_G=Green
 option.ARNIYRE_B=Blue
 option.ARNIYRE_I=Intensity
-screen.CGT=Color Grading & Tonemap
+screen.CGT=§6Color Grading & Tonemap
 screen.EXPOSURE_CONFIG=More Exposure Config
 screen.COLOR_GRADING_CONFIG=Color Grading Config
 screen.CG_R=Red Channel
@@ -72,9 +74,10 @@ screen.CG_G=Green Channel
 screen.CG_B=Blue Channel
 screen.CG_T=Tint
 
-screen.EXTRAS=Extras
+screen.EXTRAS=§1E§2x§ct§6r§fa
 
-screen.ANIMATION=Animations
+
+screen.ANIMATION=§3Animations
 
 #Settings
 option.ABOUT=§3Beyond Vanilla v1.0.1
@@ -484,12 +487,12 @@ value.WATER_PIXEL.0=OFF
 
 #Camera
 option.DOF=Depth of Field
-option.DOF.comment=Enables camera focus effect.
+option.DOF.comment=§e[?]§ Adds a focus effect, best for cinematics.
 option.DOF_STRENGTH=DoF Strength
 option.DOF_STRENGTH.comment=Adjusts the focus strength, higher value blurs quicker.
 
 option.MOTION_BLUR=Motion Blur
-option.MOTION_BLUR.comment=Enables camera motion based blurring.
+option.MOTION_BLUR.comment=§e[?]§ Adds motion blur when moving the camera left to right , works well with Depth of feild enabled
 
 option.MOTION_BLUR_STRENGTH=Motion Blur Strength
 option.MOTION_BLUR_STRENGTH.comment=Adjusts motion blur intensity.
@@ -529,10 +532,10 @@ option.LENS_FLARE_STRENGTH=Lens Flare Strength
 option.LENS_FLARE_STRENGTH.comment=Adjusts lens flare intensity.
 
 option.VIGNETTE=Vignette
-option.VIGNETTE.comment=Fades the edge of the screen to black. §e[*]§rDisable for 360 imaging.
+option.VIGNETTE.comment=§2[?]§r Fades the edges of the screen to black §e[*]§rDisable for 360 imaging.
 
 option.VIGNETTE_STRENGTH=Vignette Strength
-option.VIGNETTE_STRENGTH.comment=Adjusts vignette intensity.
+option.VIGNETTE_STRENGTH.comment=§2[?]§ Adjusts how strong the fading of the edges is.
 value.VIGNETTE_STRENGTH.0.26=0.1
 value.VIGNETTE_STRENGTH.0.51=0.2
 value.VIGNETTE_STRENGTH.0.72=0.3
@@ -716,10 +719,7 @@ option.NETHER_BG=Green
 option.NETHER_BB=Blue
 option.NETHER_BI=Intensity
 
-option.END_R=Red
-option.END_G=Green
-option.END_B=Blue
-option.END_I=Intensity
+
 
 option.EMISSIVE_RECOLOR=Emissive Recolor
 option.EMISSIVE_RECOLOR.comment=Tints certain emissive blocks with blocklight color.
@@ -805,7 +805,7 @@ option.CG_TM=Tint Mix Value
 
 #Extras
 option.OUTLINE=Outline
-option.OUTLINE.comment=Enables outline effect.
+option.OUTLINE.comment=Enables outline effect. §e[?]§ §cBlack§ Makes the game look like the other Minecraft Ledgends . §e[?]§ §2Colored§ Makes the game look like black but lighter. §e[?]§ §31.12§ Coverart looks like a more outlined version of Minecraft. §e[?]§ §0Dungeons§ Doest change much but adds a slight outline, It also looks like The game Dungeons.
 value.OUTLINE.0=OFF
 value.OUTLINE.1=Black
 value.OUTLINE.2=Colored
@@ -816,13 +816,13 @@ option.TOON_LIGHTMAP=Toon Lightmap
 option.TOON_LIGHTMAP.comment=Reduces the quality of vanilla lighting for cel shading. §e[*]§rThis option is known for making the game "look bad", only enable this when needed.
 
 option.RETRO_FILTER=Retro Filter
-option.RETRO_FILTER.comment=Adds pixelation and dithering. §e[*]§rLower render quality for stronger pixelation. §c[-]§rIncompatible with anti-aliasing.
+option.RETRO_FILTER.comment=Adds pixelation. §e[?]§rMakes the game look like a pixelated game. §e[*]§rLower render quality for stronger pixelation. §c[-]§rIncompatible with anti-aliasing.
 
 option.WORLD_CURVATURE=World Curvature
 option.WORLD_CURVATURE.comment=Enables world curvature. §e[*]§rWorks in overworld only. §c[-]§rMissing chunks are handled by Minecraft itself which I can't fix. §c[-]§rMay break block selection highlight on 1.17.
 
 option.WORLD_CURVATURE_SIZE=World Curvature Size
-option.WORLD_CURVATURE_SIZE.comment=Adjusts world curvature size. Negative values will bend the world upwards.
+option.WORLD_CURVATURE_SIZE.comment=§e[?]§rAdjusts world curvature size. §e[?]§rNegative values will bend the world upwards .
 
 #Animations
 option.WORLD_TIME_ANIMATION=World Time Animation
