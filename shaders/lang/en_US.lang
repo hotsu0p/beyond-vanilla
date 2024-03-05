@@ -26,7 +26,7 @@ screen.WATER=§6Water
 screen.CAMERA=§3Camera
 
 screen.ANTIALIASING=§6Anti-aliasing
-
+scree.ANTIALIASING.comment=test
 screen.COLOR=§3Color
 screen.END_COLOR=Test
 screen.LIGHT_COLOR=Lighting Color
@@ -532,7 +532,7 @@ option.LENS_FLARE_STRENGTH=Lens Flare Strength
 option.LENS_FLARE_STRENGTH.comment=Adjusts lens flare intensity.
 
 option.VIGNETTE=Vignette
-option.VIGNETTE.comment=§2[?]§r Fades the edges of the screen to black §e[*]§rDisable for 360 imaging.
+option.VIGNETTE.comment=§2[?]§r Fades the edges of the screen to black. §e[*]§rDisable for 360 imaging.
 
 option.VIGNETTE_STRENGTH=Vignette Strength
 option.VIGNETTE_STRENGTH.comment=§2[?]§ Adjusts how strong the fading of the edges is.
@@ -829,34 +829,35 @@ option.WORLD_TIME_ANIMATION=World Time Animation
 option.WORLD_TIME_ANIMATION.comment=Use ingame time for moving objects. §e[*]§rThis option is mostly used when making cinematics.
 
 option.ANIMATION_SPEED=Animation Speed
-option.ANIMATION_SPEED.comment=Adjusts animation speed.
+option.ANIMATION_SPEED.comment=§2[?]§r Adjusts animation speed. §2[?]§r The higher the vaule the faster the Animations move. 
 option.GLINT_B=test
 #Waving Blocks
-option.WAVING_GRASS.comment=Allows grass to wave.
+option.WAVING_GRASS=Waving grass
+option.WAVING_GRASS.comment=§2[?]§r Allows the grass to wave.
 
 option.WAVING_CROP=Crops
-option.WAVING_CROP.comment=Allows plants on farmlands to wave.
+option.WAVING_CROP.comment= §2[?]§r Allows plants on farmlands to wave.
 
 option.WAVING_PLANT=Plants
-option.WAVING_PLANT.comment=Allows various plants to wave.
+option.WAVING_PLANT.comment=§2[?]§r Allows various plants to wave.
 
 option.WAVING_TALL_PLANT=Tall Plants
-option.WAVING_TALL_PLANT.comment=Allows 2 block height plants to wave.
+option.WAVING_TALL_PLANT.comment=§2[?]§rAllows 2 block height plants to wave.
 
 option.WAVING_LEAF=Leaves
-option.WAVING_LEAF.comment=Allows leaves to wave.
+option.WAVING_LEAF.comment=§2[?]§rAllows leaves to wave.
 
 option.WAVING_VINE=Vines
-option.WAVING_VINE.comment=Allows vines to wave.
+option.WAVING_VINE.comment=§2[?]§rAllows vines to wave.
 
 option.WAVING_WATER=Water
-option.WAVING_WATER.comment=Allows water to wave.
+option.WAVING_WATER.comment=§2[?]§rAllows water to have waves.
 
 option.WAVING_LAVA=Lava
-option.WAVING_LAVA.comment=Allows lava to wave.
+option.WAVING_LAVA.comment=§2[?]§rAllows lava to wave.
 
 option.WAVING_FIRE=Fire
-option.WAVING_FIRE.comment=Allows fire to wave.
+option.WAVING_FIRE.comment=§2[?]§rAllows fire to wave.
 
 option.WAVING_LANTERN=Lantern
-option.WAVING_LANTERN.comment=Allows lantern to wave.
+option.WAVING_LANTERN.comment=§2[?]§rAllows lanterns to wave, applies to both variants
