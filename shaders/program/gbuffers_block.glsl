@@ -148,8 +148,12 @@ void main() {
 	float skyOcclusion = 0.0;
 	vec3 fresnel3 = vec3(0.0);
 	#endif
-
-	if(blockEntityId == 10401) albedo.a = 0.0;
+	// Check if the block is a cauldron
+    if (blockEntityId == 10401) {
+        // Set color to red for the water in the cauldron
+        albedo.rgb = vec3(1.0, 0.0, 0.0);  // Red color
+    }
+	if(blockEntityId == 10401) albedo.a = 1000;
 
 	if (albedo.a > 0.001) {
 		vec2 lightmap = clamp(lmCoord, vec2(0.0), vec2(1.0));

@@ -161,6 +161,7 @@ vec3 GetWaterNormal(vec3 worldPos, vec3 viewPos, vec3 viewVector) {
 	vec3 normalMap = vec3(xDelta, yDelta, 1.0 - (xDelta * xDelta + yDelta * yDelta));
 	return normalMap * normalStrength + vec3(0.0, 0.0, 1.0 - normalStrength);
 }
+// Check if the water is in a cauldron
 
 //Includes//
 #include "/lib/color/blocklightColor.glsl"
@@ -309,7 +310,7 @@ void main() {
 		#ifdef MULTICOLORED_BLOCKLIGHT
 		vec3 opaquelightAlbedo = texture2D(colortex8, screenPos.xy).rgb;
 		if (water < 0.5) {
-			opaquelightAlbedo *= vlAlbedo;
+			opaquelightAlbedo *= vlAlbedo;	
 		}
 		lightAlbedo = albedo.rgb + 0.00001;
 
