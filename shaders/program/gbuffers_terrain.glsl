@@ -421,12 +421,12 @@ varying vec4 vTexCoord, vTexCoordAM;
 
 //Uniforms//
 uniform int worldTime;
-
 uniform float frameTimeCounter;
 uniform float timeAngle;
-
+uniform float heldBlockLightValue;
+uniform vec2 sunRotationData;
 uniform vec3 cameraPosition;
-
+uniform sampler2D lightmap; // Add this line
 uniform mat4 gbufferModelView, gbufferModelViewInverse;
 
 #ifdef TAA
@@ -463,6 +463,7 @@ float frametime = frameTimeCounter * ANIMATION_SPEED;
 
 //Program//
 void main() {
+	
 	texCoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
     
 	lmCoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
@@ -491,9 +492,10 @@ void main() {
 	vTexCoordAM.pq  = abs(texMinMidCoord) * 2;
 	vTexCoordAM.st  = min(texCoord, midCoord - texMinMidCoord);
 	
+		FragColor = vec4(color.rgb * 0.1, 1.0); // make it glow
 	vTexCoord.xy    = sign(texMinMidCoord) * 0.5 + 0.5;
 	#endif
-    
+    float adjustedHeldBlockLightValue = 10000.0 * (1.0 - sunRotationData.x) * (1.0 - sunRotationData.y) * 0.5 + 10000.0 * 0.5;
 	color = gl_Color;
 	
 	mat = 0.0; recolor = 0.0;
@@ -512,20 +514,39 @@ void main() {
 		mat = 5.0;
 
 	if (mc_Entity.x == 10201 || mc_Entity.x == 10205 || mc_Entity.x == 10206)
-		recolor = 1.0;
+		recolor = 1.0;		
 
 	if (mc_Entity.x == 10202)
 		lmCoord.x -= 0.0667;
 
-	if (mc_Entity.x == 10203)
+	if (mc_Entity.x == 10203)	
 		lmCoord.x += 0.0667;
 
-	if (color.a < 0.1)
+if (mc_Entity.x == 10212) {
+    // Sample the lightmap for light intensity
+    float lightIntensity = texture2D(lightmap, lmCoord).r;
+    
+    // Define a scaling factor to control the reflection effect
+    float reflectionScale = 0.7; // Adjust this value to control the reflection effect
+    
+    // Define a base brightness level
+    float baseBrightness = 0.2; // Adjust this value to control the base brightness
+    
+    // Use smoothstep to interpolate between the base brightness and the light intensity
+    float interpolatedIntensity = smoothstep(0.0, 1.0, lightIntensity * reflectionScale);
+    
+    // Apply the interpolated intensity to the entity's color
+    color.rgb = mix(vec3(baseBrightness), color.rgb, interpolatedIntensity);
+    
+    // Ensure the color stays within valid range
+    color.rgb = max(color.rgb, vec3(0.1));
+}
+ 	if (color.a < 0.1)
 		color.a = 1.0;
 
 	const vec2 sunRotationData = vec2(cos(sunPathRotation * 0.01745329251994), -sin(sunPathRotation * 0.01745329251994));
 	float ang = fract(timeAngle - 0.25);
-	ang = (ang + (cos(ang * 3.14159265358979) * -0.5 + 0.5 - ang) / 3.0) * 6.28318530717959;
+	ang = (ang + (cos(ang * 3.14159265358979) * -0.5 + 0.5 - ang) / 3.0) * 6.28318530717959; 
 	sunVec = normalize((gbufferModelView * vec4(vec3(-sin(ang), cos(ang) * sunRotationData) * 2000.0, 1.0)).xyz);
 
 	upVec = normalize(gbufferModelView[1].xyz);
