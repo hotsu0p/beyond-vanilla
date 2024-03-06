@@ -372,6 +372,7 @@ Please don't edit anything from Undefine section and onwards.
   #define WAVING_LAVA
   #define WAVING_FIRE
   #define WAVING_LANTERN
+  #define WAVING_CHAIN
   
 //Undefine//
   #ifdef NETHER

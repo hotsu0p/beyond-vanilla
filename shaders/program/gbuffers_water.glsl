@@ -482,8 +482,10 @@ void main() {
 			#if defined OVERWORLD || defined END
 			vec3 specularColor = GetSpecularColor(lightmap.y, 0.0, vec3(1.0));
 
-			vec3 specular = GetSpecularHighlight(newNormal, viewPos,  0.9, vec3(0.02),
-													specularColor, shadow, color.a);
+			#pragma optimize(on)
+			vec3 specular = GetSpecularHighlight(newNormal, viewPos, 0.9, vec3(0.02), specularColor, shadow, color.a);
+			#pragma optimize(off)
+
 			#if ALPHA_BLEND == 0
 			float specularAlpha = pow(mix(albedo.a, 1.0, fresnel), 2.2) * fresnel;
 			#else
@@ -685,6 +687,9 @@ float WavingWater(vec3 worldPos) {
 	return 0.0;
 }
 
+uniform sampler2D raindropTexture;
+uniform sampler2D netherPortalTexture;
+uniform float time;
 //Includes//
 #ifdef TAA
 #include "/lib/util/jitter.glsl"
@@ -732,8 +737,12 @@ void main() {
 	if (mc_Entity.x == 10300 || mc_Entity.x == 10304) mat = 1.0;
 	if (mc_Entity.x == 10301)						  mat = 2.0;
 	if (mc_Entity.x == 10302) 						  mat = 3.0;
-	if (mc_Entity.x == 10303) 						  mat = 4.0;
+	// Add a custom texture sampler for the Nether portal
 
+// In the main function, sample the texture and apply it to the portal
+ if (mc_Entity.x == 10303) {
+	 mat = 1000.0; // Use a unique material ID for the Nether portal texture
+    }
 	const vec2 sunRotationData = vec2(
 		 cos(sunPathRotation * 0.01745329251994),
 		-sin(sunPathRotation * 0.01745329251994)
@@ -749,7 +758,7 @@ void main() {
 	
 	#ifdef WAVING_WATER
 	float istopv = gl_MultiTexCoord0.t < mc_midTexCoord.t ? 1.0 : 0.0;
-	if (mc_Entity.x == 10300 || mc_Entity.x == 10302 || mc_Entity.x == 10304) position.y += WavingWater(position.xyz);
+	if (mc_Entity.x == 10300 || mc_Entity.x == 10302 || mc_Entity.x == 10304 || mc_Entity.x == 10303) position.y += WavingWater(position.xyz);
 	#endif
 
     #ifdef WORLD_CURVATURE

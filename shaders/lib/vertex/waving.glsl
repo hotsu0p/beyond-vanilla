@@ -127,6 +127,15 @@ vec3 WavingBlocks(vec3 position, float istopv) {
     if (mc_Entity.x == 10206)
 		wave += CalcLanternMove(worldpos);
     #endif
+#ifdef WAVING_CHAIN
+    if (mc_Entity.x == 10999 && istopv > 0.9) {
+    
+        vec2 lateralMovement = vec2(0.01 * sin(worldpos.y * 0.05), 0.0);
+        vec3 adjustedWorldPos = worldpos + vec3(lateralMovement, 0.0); 
+        wave += CalcMove(adjustedWorldPos, 0.005, 0.05, vec2(0.0, 0.05));
+    }
+#endif
+
 
     position += wave;
 

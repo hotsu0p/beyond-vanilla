@@ -492,7 +492,6 @@ void main() {
 	vTexCoordAM.pq  = abs(texMinMidCoord) * 2;
 	vTexCoordAM.st  = min(texCoord, midCoord - texMinMidCoord);
 	
-		FragColor = vec4(color.rgb * 0.1, 1.0); // make it glow
 	vTexCoord.xy    = sign(texMinMidCoord) * 0.5 + 0.5;
 	#endif
     float adjustedHeldBlockLightValue = 10000.0 * (1.0 - sunRotationData.x) * (1.0 - sunRotationData.y) * 0.5 + 10000.0 * 0.5;
@@ -512,13 +511,12 @@ void main() {
 		mat = 4.0;
 	if (mc_Entity.x == 10208)
 		mat = 5.0;
-
 	if (mc_Entity.x == 10201 || mc_Entity.x == 10205 || mc_Entity.x == 10206)
 		recolor = 1.0;		
 
 	if (mc_Entity.x == 10202)
 		lmCoord.x -= 0.0667;
-
+	
 	if (mc_Entity.x == 10203)	
 		lmCoord.x += 0.0667;
 	if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
