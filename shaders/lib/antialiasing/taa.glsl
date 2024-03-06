@@ -1,6 +1,5 @@
 
 
-//Previous frame reprojection from Chocapic13
 vec2 Reprojection(vec3 pos) {
 	pos = pos * 2.0 - 1.0;
 

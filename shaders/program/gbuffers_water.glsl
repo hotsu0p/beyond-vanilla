@@ -740,9 +740,7 @@ void main() {
 	// Add a custom texture sampler for the Nether portal
 
 // In the main function, sample the texture and apply it to the portal
- if (mc_Entity.x == 10303) {
-	 mat = 1000.0; // Use a unique material ID for the Nether portal texture
-    }
+
 	const vec2 sunRotationData = vec2(
 		 cos(sunPathRotation * 0.01745329251994),
 		-sin(sunPathRotation * 0.01745329251994)
@@ -758,7 +756,8 @@ void main() {
 	
 	#ifdef WAVING_WATER
 	float istopv = gl_MultiTexCoord0.t < mc_midTexCoord.t ? 1.0 : 0.0;
-	if (mc_Entity.x == 10300 || mc_Entity.x == 10302 || mc_Entity.x == 10304 || mc_Entity.x == 10303) position.y += WavingWater(position.xyz);
+	if (mc_Entity.x == 10300 || mc_Entity.x == 10302 || mc_Entity.x == 10304 || mc_Entity.x == 10303|| mc_Entity.x == 10048) position.y += WavingWater(position.xyz);
+	
 	#endif
 
     #ifdef WORLD_CURVATURE

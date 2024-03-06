@@ -1,4 +1,5 @@
 const float pi = 3.1415927;
+uniform float cauldronWaterLevel;
 const float constantTime = 1.0; // Constant time value
 float pi2wt = 6.2831854 * (constantTime * 24.0);
 
@@ -76,7 +77,6 @@ vec3 CalcLanternMove(vec3 position) {
     
     return flr + frc - position;
 }
-
 vec3 WavingBlocks(vec3 position, float istopv) {
     vec3 wave = vec3(0.0);
     vec3 worldpos = position + cameraPosition;
@@ -137,6 +137,8 @@ vec3 WavingBlocks(vec3 position, float istopv) {
         vec3 adjustedWorldPos = worldpos + vec3(lateralMovement, 0.0); 
         wave += CalcMove(adjustedWorldPos, 0.005, 0.05, vec2(0.0, 0.05));
     }
+
+    
 #endif
 
 

@@ -59,7 +59,6 @@ vec4 Raytrace(sampler2D depthtex, vec3 viewPos, vec3 normal, float dither, out f
 	border = cdist(pos.st);
 
 	#ifdef REFLECTION_PREVIOUS
-	//Previous frame reprojection from Chocapic13
 	vec4 viewPosPrev = gbufferProjectionInverse * vec4(pos * 2.0 - 1.0, 1.0);
 	viewPosPrev /= viewPosPrev.w;
 	
