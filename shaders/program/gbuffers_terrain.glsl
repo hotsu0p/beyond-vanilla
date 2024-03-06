@@ -521,24 +521,12 @@ void main() {
 
 	if (mc_Entity.x == 10203)	
 		lmCoord.x += 0.0667;
-
-if (mc_Entity.x == 10212) {
-    // Sample the lightmap for light intensity
+	if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
     float lightIntensity = texture2D(lightmap, lmCoord).r;
-    
-    // Define a scaling factor to control the reflection effect
-    float reflectionScale = 0.7; // Adjust this value to control the reflection effect
-    
-    // Define a base brightness level
-    float baseBrightness = 0.2; // Adjust this value to control the base brightness
-    
-    // Use smoothstep to interpolate between the base brightness and the light intensity
+    float reflectionScale = 0.7;
+    float baseBrightness = 0.2;
     float interpolatedIntensity = smoothstep(0.0, 1.0, lightIntensity * reflectionScale);
-    
-    // Apply the interpolated intensity to the entity's color
     color.rgb = mix(vec3(baseBrightness), color.rgb, interpolatedIntensity);
-    
-    // Ensure the color stays within valid range
     color.rgb = max(color.rgb, vec3(0.1));
 }
  	if (color.a < 0.1)
