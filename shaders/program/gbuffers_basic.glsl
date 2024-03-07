@@ -138,9 +138,9 @@ void main() {
     float cameraPosCBSA = cameraPosition.x + cameraPosition.y + cameraPosition.z;
     float finalPosCBSA = worldPosCBSA + cameraPosCBSA;
     if (dot(worldPos - cameraPosition, cameraDirection) < 1.0) {
-        // Create a moving pseudo-rainbow effect
-        float timeOffset = frameTimeCounter * 0.1; 
-        float hue = fract(finalPosCBSA + timeOffset) * 10.0; 
+
+        float timeOffset = frameTimeCounter * 0.5; 
+        float hue = fract(finalPosCBSA + timeOffset) * 6.5; 
         vec3 rainbowColor;
         if (hue < 1.0) {
             rainbowColor = vec3(1.0, hue, 0.0); // Red to yellow
@@ -153,7 +153,7 @@ void main() {
         } else if (hue < 5.0) {
             rainbowColor = vec3(hue - 4.0, 0.0, 1.0); // Blue to magenta
         } else {
-            rainbowColor = vec3(1.0, 0.0, 1.0 - (hue - 5.0)); // Magenta to red
+            rainbowColor = vec3(1.0, 0.0, 1.0 - (hue - 4.5)); // Magenta to red
         }
         albedo.rgb = rainbowColor;
     }
