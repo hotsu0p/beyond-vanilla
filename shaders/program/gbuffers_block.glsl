@@ -22,6 +22,9 @@ varying vec3 viewVector;
 
 varying vec4 vTexCoord, vTexCoordAM;
 #endif
+uniform bool isHighlighted; // Add this line to declare the isHighlighted variable
+
+uniform vec3 cameraDirection; // This should be the direction the camera is pointing
 
 //Uniforms//
 uniform int blockEntityId;
@@ -114,15 +117,46 @@ float GetLuminance(vec3 color) {
 #ifdef MULTICOLORED_BLOCKLIGHT
 #include "/lib/lighting/coloredBlocklight.glsl"
 #endif
-
 #ifdef NORMAL_SKIP
 #undef PARALLAX
 #undef SELF_SHADOW
 #endif
+vec4 clamp01(vec4 value) {
+    return clamp(value, vec4(0.0), vec4(1.0));
+}
 
+vec3 hue2(vec3 color, float hue) {
+    // Convert the color to HSV
+    float maxChannel = max(max(color.r, color.g), color.b);
+    float minChannel = min(min(color.r, color.g), color.b);
+    float delta = maxChannel - minChannel;
+    vec3 hsv = vec3(0.0, 0.0, maxChannel);
+
+    if (delta != 0.0) {
+        if (maxChannel == color.r) {
+            hsv.x = fract((color.g - color.b) / delta);
+        } else if (maxChannel == color.g) {
+            hsv.x = (color.b - color.r) / delta + 2.0;
+        } else {
+            hsv.x = (color.r - color.g) / delta + 4.0;
+        }
+        hsv.x = fract(hsv.x);
+    }
+
+    // Adjust the hue
+    hsv.x = fract(hsv.x + hue / 360.0);
+
+    // Convert back to RGB
+    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    vec3 p = abs(fract(hsv.xxx + K.xyz) * 6.0 - K.www);
+    return hsv.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), hsv.y);
+}
+varying vec3 worldPos;
 //Program//
 void main() {
+	
     vec4 albedo = texture2D(texture, texCoord) * color;
+	
 	vec3 newNormal = normal;
 	float smoothness = 0.0;
 	vec3 lightAlbedo = vec3(0.0);
@@ -153,7 +187,9 @@ void main() {
         // Set color to red for the water in the cauldron
         albedo.rgb = vec3(1.0, 0.0, 0.0);  // Red color
     }
-	if(blockEntityId == 10401) albedo.a = 1000;
+
+   
+
 
 	if (albedo.a > 0.001) {
 		vec2 lightmap = clamp(lmCoord, vec2(0.0), vec2(1.0));

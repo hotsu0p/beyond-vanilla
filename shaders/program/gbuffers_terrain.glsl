@@ -506,9 +506,6 @@ void main() {
 		mat = 2.0;
 		color.rgb *= 1.225;
 	}
-	// dis for culdronns with water in them
-	if (mc_Entity.x == 10048)
-		
 	if (mc_Entity.x >= 10200 && mc_Entity.x < 10300)
 		mat = 3.0;
 	if (mc_Entity.x == 10203)

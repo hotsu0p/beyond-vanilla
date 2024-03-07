@@ -80,7 +80,7 @@ float GetLuminance(vec3 color) {
 #ifdef MULTICOLORED_BLOCKLIGHT
 #include "/lib/lighting/coloredBlocklight.glsl"
 #endif
-
+ uniform vec3 cameraDirection;
 //Program//
 void main() {
     vec4 albedo = color;
@@ -125,6 +125,7 @@ void main() {
 		blocklightCol = ApplyMultiColoredBlocklight(blocklightCol, screenPos);
 		#endif
 		
+  
 		vec3 shadow = vec3(0.0);
 		GetLighting(albedo.rgb, shadow, viewPos, worldPos, lightmap, 1.0, NoL, vanillaDiffuse,
 				    1.0, 0.0, 0.0, 0.0);
@@ -132,6 +133,31 @@ void main() {
 		#if ALPHA_BLEND == 0
 		albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
 		#endif
+	#ifdef HIGHLIGHT
+    float worldPosCBSA = worldPos.x + worldPos.y + worldPos.z;
+    float cameraPosCBSA = cameraPosition.x + cameraPosition.y + cameraPosition.z;
+    float finalPosCBSA = worldPosCBSA + cameraPosCBSA;
+    if (dot(worldPos - cameraPosition, cameraDirection) < 1.0) {
+        // Create a moving pseudo-rainbow effect
+        float timeOffset = frameTimeCounter * 0.1; 
+        float hue = fract(finalPosCBSA + timeOffset) * 10.0; 
+        vec3 rainbowColor;
+        if (hue < 1.0) {
+            rainbowColor = vec3(1.0, hue, 0.0); // Red to yellow
+        } else if (hue < 2.0) {
+            rainbowColor = vec3(1.0 - (hue - 1.0), 1.0, 0.0); // Yellow to green
+        } else if (hue < 3.0) {
+            rainbowColor = vec3(0.0, 1.0, hue - 2.0); // Green to cyan
+        } else if (hue < 4.0) {
+            rainbowColor = vec3(0.0, 1.0 - (hue - 3.0), 1.0); // Cyan to blue
+        } else if (hue < 5.0) {
+            rainbowColor = vec3(hue - 4.0, 0.0, 1.0); // Blue to magenta
+        } else {
+            rainbowColor = vec3(1.0, 0.0, 1.0 - (hue - 5.0)); // Magenta to red
+        }
+        albedo.rgb = rainbowColor;
+    }
+#endif
 	}
 
     /* DRAWBUFFERS:0 */
