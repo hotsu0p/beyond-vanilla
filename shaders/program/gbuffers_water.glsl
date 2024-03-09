@@ -240,7 +240,7 @@ void main() {
 		emission *= dot(albedo.rgb, albedo.rgb) * 0.333;
 		
 		#ifndef REFLECTION_TRANSLUCENT
-		glass = 0.0;
+		glass = 100;
 		translucent = 0.0;
 		#endif
 
@@ -735,7 +735,7 @@ void main() {
 	mat = 0.0;
 	
 	if (mc_Entity.x == 10300 || mc_Entity.x == 10304) mat = 1.0;
-	if (mc_Entity.x == 10301)						  mat = 2.0;
+	if (mc_Entity.x == 10301)						  mat = 0.0;
 	if (mc_Entity.x == 10302) 						  mat = 3.0;
 	// Add a custom texture sampler for the Nether portal
 
@@ -756,7 +756,7 @@ void main() {
 	
 	#ifdef WAVING_WATER
 	float istopv = gl_MultiTexCoord0.t < mc_midTexCoord.t ? 1.0 : 0.0;
-	if (mc_Entity.x == 10300 || mc_Entity.x == 10302 || mc_Entity.x == 10304 || mc_Entity.x == 10303|| mc_Entity.x == 10048) position.y += WavingWater(position.xyz);
+	if (mc_Entity.x == 10300 || mc_Entity.x == 10302 || mc_Entity.x == 10304 ) position.y += WavingWater(position.xyz);
 	
 	#endif
 

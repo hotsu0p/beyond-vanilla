@@ -408,6 +408,8 @@ varying vec2 texCoord, lmCoord;
 varying vec3 normal;
 varying vec3 sunVec, upVec, eastVec;
 
+// Varyings
+varying vec4 albedo;
 varying vec4 color;
 
 #ifdef ADVANCED_MATERIALS
@@ -449,7 +451,7 @@ float frametime = float(worldTime) * 0.05 * ANIMATION_SPEED;
 #else
 float frametime = frameTimeCounter * ANIMATION_SPEED;
 #endif
-
+float reflectionScale = 0.7; 
 //Includes//
 #include "/lib/vertex/waving.glsl"
 
@@ -462,9 +464,10 @@ float frametime = frameTimeCounter * ANIMATION_SPEED;
 #include "/lib/vertex/worldCurvature.glsl"
 #endif
 
+
 //Program//
 void main() {
-	
+
 	texCoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
     
 	lmCoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
@@ -520,6 +523,11 @@ void main() {
 	
 	if (mc_Entity.x == 10203)	
 		lmCoord.x += 0.0667;
+  
+	if (mc_Entity.x == 10301)
+		// make it red
+		recolor = 100;	
+		
 	if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
     float lightIntensity = texture2D(lightmap, lmCoord).r;
     float reflectionScale = 0.7; 

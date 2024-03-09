@@ -157,7 +157,7 @@ option.MCBL_LEGACY_COLOR=Legacy Color
 option.MCBL_LEGACY_COLOR.comment=Use the old method of calculating blocklight color.
 
 #Material
-option.ADVANCED_MATERIALS=Shiny Materials
+option.ADVANCED_MATERIALS=ADVANCED_MATERIALS
 option.ADVANCED_MATERIALS.comment=Enables the use of specular and normal mapping which allows for more detail on various things.  §e[*]§rThis option requires a resource pack which contains specular and/or normal maps, disable if none is currently used. §e[*]§rOptions which requires advanced materials are indicated by *, changing these options won't affect the visuals or performance while advanced materials is disabled. 
 
 option.MATERIAL_FORMAT=Material Format*

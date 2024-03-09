@@ -38,7 +38,6 @@ vec3 GetBlurredColor(vec2 view) {
 
 	return color;
 }
-
 #ifdef TAA_SELECTIVE
 float GetSkipFlag(float depth, vec2 view) {
 	float skip = texture2D(colortex3, texCoord.xy).b;

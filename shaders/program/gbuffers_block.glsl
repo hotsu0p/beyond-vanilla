@@ -124,7 +124,8 @@ float GetLuminance(vec3 color) {
 vec4 clamp01(vec4 value) {
     return clamp(value, vec4(0.0), vec4(1.0));
 }
-
+uniform sampler2D colortex0;
+uniform sampler2D depthtex1;
 vec3 hue2(vec3 color, float hue) {
     // Convert the color to HSV
     float maxChannel = max(max(color.r, color.g), color.b);
@@ -151,7 +152,28 @@ vec3 hue2(vec3 color, float hue) {
     vec3 p = abs(fract(hsv.xxx + K.xyz) * 6.0 - K.www);
     return hsv.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), hsv.y);
 }
+float random(vec2 st){
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+float noise(vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
+
+    // Smooth the interpolation
+    f = f*f*(3.0-2.0*f);
+
+    // Randomly hash the 4 corners
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+    // Interpolate between the random values
+    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}
 varying vec3 worldPos;
+
 //Program//
 void main() {
 	
@@ -182,15 +204,9 @@ void main() {
 	float skyOcclusion = 0.0;
 	vec3 fresnel3 = vec3(0.0);
 	#endif
-	// Check if the block is a cauldron
-    if (blockEntityId == 10401) {
-        // Set color to red for the water in the cauldron
-        albedo.rgb = vec3(1.0, 0.0, 0.0);  // Red color
-    }
 
-   
-
-
+	
+	
 	if (albedo.a > 0.001) {
 		vec2 lightmap = clamp(lmCoord, vec2(0.0), vec2(1.0));
 		
@@ -315,6 +331,7 @@ void main() {
 		}
 		#endif
 		
+
 		float aoSquared = ao * ao;
 		shadow *= aoSquared; fresnel3 *= aoSquared;
 		albedo.rgb = albedo.rgb * (1.0 - fresnel3 * smoothness * smoothness * (1.0 - metalness));
@@ -337,19 +354,23 @@ void main() {
 		if(blockEntityId == 10205) albedo.a = sqrt(albedo.a);
 		#endif
 	}
+// from bsl
 
-if (blockEntityId == 10401) {
+
+ if (blockEntityId == 10401) {
     vec2 portalCoord = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
     portalCoord = (portalCoord - 0.5) * vec2(aspectRatio, 1.0);
 
     vec3 portColSqrt = vec3(END_R, END_G, END_B) / 255.0 * END_I;
     vec3 portCol = portColSqrt * portColSqrt * 0.05;
     vec2 wind = vec2(0, frametime * 0.025);
-
+	// add floatinng cubes
+	portCol += texture2D(noisetex, portalCoord * 0.1 + wind * 0.05).rgb * 0.05 * portColSqrt * portColSqrt * 0.05;
+    // Add portal shimmer effect
     float portal = texture2D(noisetex, portalCoord * 0.1 + wind * 0.05).r * 0.25 + 0.375;
 
     // Add intermittent glow effect
-    float glowFactor = step(mod(frameTimeCounter, 2.0), 1.0);  // Glows every 2 seconds
+    float glowFactor = step(mod(frameTimeCounter, 200), 1.0);  // Glows every 2 seconds
     portal += glowFactor * (sin(frameCounter * 0.1) * 0.2 + 0.2);  // Intermittent glow
 
     #ifdef END
@@ -371,7 +392,7 @@ if (blockEntityId == 10401) {
     #endif
 }
 
-
+	
 
     /* DRAWBUFFERS:0 */
     gl_FragData[0] = albedo;
@@ -460,6 +481,7 @@ float frametime = frameTimeCounter * ANIMATION_SPEED;
 
 //Program//
 void main() {
+		
 	texCoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
     
 	lmCoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
@@ -511,6 +533,7 @@ void main() {
 	#ifdef TAA
 	gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
+	
 }
 
 #endif

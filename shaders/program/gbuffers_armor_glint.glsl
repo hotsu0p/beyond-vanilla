@@ -19,15 +19,12 @@ float eBS = eyeBrightnessSmooth.y / 240.0;
 
 //Program//
 void main() {
-    // Sample the texture and multiply it by the base color
     vec4 albedo = texture2D(texture, texCoord) * color;
 
-    // Calculate the glint effect based on some property, e.g., specular reflection
-    float glintIntensity = .05; // Adjust this value to control the intensity of the glint
+
+    float glintIntensity = .35; 
     vec3 glintEffect = vec3(glintIntensity);
 
-    // Apply the glint effect by adding it to the original color
-    // Note: This is a simple additive blend. You might want to use a more sophisticated method
     albedo.rgb += glintEffect * albedo.rgb;
 
     // Output the final color with the glint effect
