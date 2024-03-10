@@ -44,10 +44,10 @@ float GetRipple(vec3 worldPos, vec2 offset) {
 
 vec3 GetPuddleNormal(vec3 worldPos, vec3 viewPos, mat3 tbn) {
     vec3 puddlePos = worldPos + cameraPosition;
-    float normalOffset = 0.1;
+    float normalOffset = 0.01;
 
 	float fresnel = pow(clamp(1.0 + dot(normalize(normal), normalize(viewPos)), 0.0, 1.0), 7.5);
-	float normalStrength = 0.35 * (1.0 - fresnel);
+	float normalStrength = 5 * (1.0 - fresnel);
     
     float h1 = GetRipple(puddlePos, vec2( normalOffset, 0.0));
     float h2 = GetRipple(puddlePos, vec2(-normalOffset, 0.0));

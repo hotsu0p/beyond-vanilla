@@ -148,10 +148,10 @@ void main() {
 	float skyOcclusion = 0.0;
 	vec3 fresnel3 = vec3(0.0);
 	#endif
-
-	#ifdef ENTITY_FLASH
-	albedo.rgb = mix(albedo.rgb, entityColor.rgb, entityColor.a);
-	#endif
+#ifdef ENTITY_FLASH
+    vec3 darkerRed = entityColor.rgb * vec3(2.5, 0.0, 0.0);
+    albedo.rgb = mix(albedo.rgb, darkerRed, entityColor.a);
+#endif
 	
 	float lightningBolt = float(entityId == 10101);
 	if(lightningBolt > 0.5) {

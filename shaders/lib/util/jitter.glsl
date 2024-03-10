@@ -1,4 +1,4 @@
-//Jitter offset from Chocapic13
+
 uniform float framemod8;
 
 vec2 jitterOffsets[8] = vec2[8](

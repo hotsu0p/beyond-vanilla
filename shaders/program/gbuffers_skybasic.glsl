@@ -2,7 +2,6 @@
 
 //Settings//
 #include "/lib/settings.glsl"
-
 //Fragment Shader///////////////////////////////////////////////////////////////////////////////////
 #ifdef FSH
 
@@ -91,7 +90,6 @@ void SunGlare(inout vec3 color, vec3 viewPos, vec3 lightCol) {
 #include "/lib/util/dither.glsl"
 #include "/lib/atmospherics/clouds.glsl"
 #include "/lib/atmospherics/sky.glsl"
-
 //Program//
 void main() {
 	#ifdef OVERWORLD

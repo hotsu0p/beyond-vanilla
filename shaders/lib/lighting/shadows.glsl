@@ -6,103 +6,61 @@ uniform sampler2DShadow shadowtex1;
 uniform sampler2D shadowcolor0;
 #endif
 
-/*
-uniform sampler2D shadowtex0;
-
-#ifdef SHADOW_COLOR
-uniform sampler2D shadowtex1;
-uniform sampler2D shadowcolor0;
-#endif
-*/
-
-vec2 shadowOffsets[9] = vec2[9](
-    vec2( 0.0, 0.0),
-    vec2( 0.0, 1.0),
-    vec2( 0.7, 0.7),
-    vec2( 1.0, 0.0),
-    vec2( 0.7,-0.7),
-    vec2( 0.0,-1.0),
-    vec2(-0.7,-0.7),
-    vec2(-1.0, 0.0),
-    vec2(-0.7, 0.7)
+const vec2 shadowOffsets[9] = vec2[](
+    vec2(0.0, 0.0), vec2(0.0, 1.0), vec2(0.7, 0.7),
+    vec2(1.0, 0.0), vec2(0.7, -0.7), vec2(0.0, -1.0),
+    vec2(-0.7, -0.7), vec2(-1.0, 0.0), vec2(-0.7, 0.7)
 );
 
-float biasDistribution[10] = float[10](
+const float biasDistribution[10] = float[](
     0.0, 0.057, 0.118, 0.184, 0.255, 0.333, 0.423, 0.529, 0.667, 1.0
 );
 
-/*
-float texture2DShadow(sampler2D shadowtex, vec3 shadowPos) {
-    float shadow = texture2D(shadowtex,shadowPos.st).x;
-    shadow = clamp((shadow-shadowPos.z)*65536.0,0.0,1.0);
-    return shadow;
-}
-*/
-
 vec3 DistortShadow(vec3 worldPos, float distortFactor) {
-	worldPos.xy /= distortFactor;
-	worldPos.z *= 0.2;
-	return worldPos * 0.5 + 0.5;
+    worldPos.xy /= distortFactor;
+    worldPos.z *= 0.2;
+    return worldPos * 0.5 + 0.5;
 }
 
 float GetCurvedBias(int i, float dither) {
-    return mix(biasDistribution[i], biasDistribution[i+1], dither);
+    return mix(biasDistribution[i], biasDistribution[i + 1], dither);
 }
 
-float InterleavedGradientNoise() {
-	float n = 52.9829189 * fract(0.06711056 * gl_FragCoord.x + 0.00583715 * gl_FragCoord.y);
-	return fract(n + frameCounter * 1.618);
+// Replaced InterleavedGradientNoise() with a hash function
+float Hash(vec2 p) {
+    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
-vec3 SampleBasicShadow(vec3 shadowPos, float subsurface) {
-    float shadow0 = shadow2D(shadowtex0, vec3(shadowPos.st, shadowPos.z)).x;
-
+vec3 SampleShadow(vec3 shadowPos, float subsurface, int samples) {
+    float shadow = 0.0;
     vec3 shadowCol = vec3(0.0);
-    #ifdef SHADOW_COLOR
-    if (shadow0 < 1.0) {
-        shadowCol = texture2D(shadowcolor0, shadowPos.st).rgb *
-                    shadow2D(shadowtex1, vec3(shadowPos.st, shadowPos.z)).x;
-        #ifdef WATER_CAUSTICS
-        shadowCol *= 4.0;
-        #endif
-    }
-    #endif
 
-    shadow0 *= mix(shadow0, 1.0, subsurface);
-    shadowCol *= shadowCol;
+    for (int i = 0; i < samples; i++) {
+        vec2 offset = shadowOffsets[i] * (1.0 / shadowMapResolution);
+        shadow += shadow2D(shadowtex0, vec3(shadowPos.st + offset, shadowPos.z)).x;
 
-    return clamp(shadowCol * (1.0 - shadow0) + shadow0, vec3(0.0), vec3(16.0));
-}
-
-vec3 SampleFilteredShadow(vec3 shadowPos, float offset, float biasStep, float subsurface) {
-    float shadow0 = 0.0;
-    
-    for (int i = 0; i < 9; i++) {
-        vec2 shadowOffset = shadowOffsets[i] * offset;
-        shadow0 += shadow2D(shadowtex0, vec3(shadowPos.st + shadowOffset, shadowPos.z)).x;
-    }
-    shadow0 /= 9.0;
-
-    vec3 shadowCol = vec3(0.0);
-    #ifdef SHADOW_COLOR
-    if (shadow0 < 0.999) {
-        for (int i = 0; i < 9; i++) {
-            vec2 shadowOffset = shadowOffsets[i] * offset;
-            vec3 shadowColSample = texture2D(shadowcolor0, shadowPos.st + shadowOffset).rgb *
-                         shadow2D(shadowtex1, vec3(shadowPos.st + shadowOffset, shadowPos.z)).x;
+        #ifdef SHADOW_COLOR
+        if (shadow < 0.999) {
+            vec3 shadowColSample = texture2D(shadowcolor0, shadowPos.st + offset).rgb *
+                                   shadow2D(shadowtex1, vec3(shadowPos.st + offset, shadowPos.z)).x;
             #ifdef WATER_CAUSTICS
             shadowColSample *= 4.0;
             #endif
             shadowCol += shadowColSample;
         }
-        shadowCol /= 9.0;
+        #endif
     }
+
+    shadow /= float(samples);
+    #ifdef SHADOW_COLOR
+    shadowCol /= float(samples);
     #endif
 
-    shadow0 *= mix(shadow0, 1.0, subsurface);
+    shadow *= mix(shadow, 1.0, subsurface);
     shadowCol *= shadowCol;
 
-    return clamp(shadowCol * (1.0 - shadow0) + shadow0, vec3(0.0), vec3(16.0));
+    return clamp(shadowCol * (1.0 - shadow) + shadow, vec3(0.0), vec3(16.0));
 }
 
 vec3 GetShadow(vec3 worldPos, float NoL, float subsurface, float skylight) {
@@ -110,7 +68,7 @@ vec3 GetShadow(vec3 worldPos, float NoL, float subsurface, float skylight) {
     worldPos = (floor((worldPos + cameraPosition) * SHADOW_PIXEL + 0.01) + 0.5) /
                SHADOW_PIXEL - cameraPosition;
     #endif
-    
+
     vec3 shadowPos = ToShadow(worldPos);
 
     float distb = sqrt(dot(shadowPos.xy, shadowPos.xy));
@@ -131,16 +89,16 @@ vec3 GetShadow(vec3 worldPos, float NoL, float subsurface, float skylight) {
     float distortBias = distortFactor * shadowDistance / 256.0;
     distortBias *= 8.0 * distortBias;
     float distanceBias = sqrt(dot(worldPos.xyz, worldPos.xyz)) * 0.005;
-    
+
     float bias = (distortBias * biasFactor + distanceBias + 0.05) / shadowMapResolution;
     float offset = 1.0 / shadowMapResolution;
-    
+
     if (subsurface > 0.0) {
         bias = 0.0002;
         offset = 0.0007;
     }
     float biasStep = 0.001 * subsurface * (1.0 - NoL);
-    
+
     #if SHADOW_PIXEL > 0
     bias += 0.0025 / SHADOW_PIXEL;
     #endif
@@ -148,17 +106,17 @@ vec3 GetShadow(vec3 worldPos, float NoL, float subsurface, float skylight) {
     shadowPos.z -= bias;
 
     #ifdef SHADOW_FILTER
-    vec3 shadow = SampleFilteredShadow(shadowPos, offset, biasStep, subsurface);
+    vec3 shadow = SampleShadow(shadowPos, subsurface, 9);
     #else
-    vec3 shadow = SampleBasicShadow(shadowPos, subsurface);
+    vec3 shadow = SampleShadow(shadowPos, subsurface, 1);
     #endif
 
     return shadow;
 }
 
 vec3 GetSubsurfaceShadow(vec3 worldPos, float subsurface, float skylight) {
-    float gradNoise = InterleavedGradientNoise();
-    
+    float gradNoise = Hash(gl_FragCoord.xy); // Use hash function instead of InterleavedGradientNoise()
+
     vec3 shadowPos = ToShadow(worldPos);
 
     float distb = sqrt(dot(shadowPos.xy, shadowPos.xy));
@@ -167,7 +125,7 @@ vec3 GetSubsurfaceShadow(vec3 worldPos, float subsurface, float skylight) {
 
     vec3 subsurfaceShadow = vec3(0.0);
 
-    for(int i = 0; i < 12; i++) {
+    for (int i = 0; i < 12; i++) {
         gradNoise = fract(gradNoise + 1.618);
         float rot = gradNoise * 6.283;
         float dist = (i + gradNoise) / 12.0;
@@ -183,20 +141,9 @@ vec3 GetSubsurfaceShadow(vec3 worldPos, float subsurface, float skylight) {
         vec3 offset = highOffset * (subsurface * 0.75 + 0.25);
 
         vec3 samplePos = shadowPos + offset;
-        float shadow0 = shadow2D(shadowtex0, samplePos).x;
+        float shadow = SampleShadow(samplePos, 0.0, 1).x; // Use SampleShadow() for subsurface shadow
 
-        vec3 shadowCol = vec3(0.0);
-        #ifdef SHADOW_COLOR
-        if (shadow0 < 1.0) {
-            shadowCol = texture2D(shadowcolor0, samplePos.st).rgb *
-                        shadow2D(shadowtex1, samplePos).x;
-            #ifdef WATER_CAUSTICS
-            shadowCol *= 4.0;
-            #endif
-        }
-        #endif
-
-        subsurfaceShadow += clamp(shadowCol * (1.0 - shadow0) + shadow0, vec3(0.0), vec3(1.0));
+        subsurfaceShadow += shadow;
     }
     subsurfaceShadow /= 12.0;
     subsurfaceShadow *= subsurfaceShadow;
@@ -206,7 +153,7 @@ vec3 GetSubsurfaceShadow(vec3 worldPos, float subsurface, float skylight) {
 #else
 vec3 GetShadow(vec3 worldPos, float NoL, float subsurface, float skylight) {
     #ifdef OVERWORLD
-    float shadow = smoothstep(0.866,1.0,skylight);
+    float shadow = smoothstep(0.866, 1.0, skylight);
     return vec3(shadow * shadow);
     #else
     return vec3(1.0);

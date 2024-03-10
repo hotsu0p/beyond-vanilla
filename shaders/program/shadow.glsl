@@ -206,7 +206,7 @@ void main() {
 	color = gl_Color;
 	
 	mat = 0;
-	if (mc_Entity.x == 10301 || mc_Entity.x == 10302) mat = 1;
+	if (mc_Entity.x == 10301 || mc_Entity.x == 10302) mat = 100;
 	if (mc_Entity.x == 10300 || mc_Entity.x == 10304) mat = 2;
 	
 	#ifndef SHADOW_VEGETATION

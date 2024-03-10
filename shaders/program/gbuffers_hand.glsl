@@ -301,6 +301,7 @@ void main() {
 		#if ALPHA_BLEND == 0
 		albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
 		#endif
+		
 	}
 
     /* DRAWBUFFERS:0 */

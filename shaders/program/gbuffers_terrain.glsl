@@ -296,10 +296,10 @@ void main() {
 					parallaxShadow, emission, subsurface, basicSubsurface);
 		
 		#ifdef ADVANCED_MATERIALS
-		float puddles = 0.0;
+		float puddles = 0.5;
 		#ifdef REFLECTION_RAIN
 		float pNoU = dot(outNormal, upVec);
-		if(wetness > 0.001) {
+		if(wetness > 1) {
 			puddles = GetPuddles(worldPos, newCoord, wetness) * clamp(pNoU, 0.0, 1.0);
 		}
 		
@@ -408,6 +408,8 @@ varying vec2 texCoord, lmCoord;
 varying vec3 normal;
 varying vec3 sunVec, upVec, eastVec;
 
+// Varyings
+varying vec4 albedo;
 varying vec4 color;
 
 #ifdef ADVANCED_MATERIALS
@@ -421,12 +423,12 @@ varying vec4 vTexCoord, vTexCoordAM;
 
 //Uniforms//
 uniform int worldTime;
-
 uniform float frameTimeCounter;
 uniform float timeAngle;
-
+uniform float heldBlockLightValue;
+uniform vec2 sunRotationData;
 uniform vec3 cameraPosition;
-
+uniform sampler2D lightmap; // Add this line
 uniform mat4 gbufferModelView, gbufferModelViewInverse;
 
 #ifdef TAA
@@ -449,7 +451,7 @@ float frametime = float(worldTime) * 0.05 * ANIMATION_SPEED;
 #else
 float frametime = frameTimeCounter * ANIMATION_SPEED;
 #endif
-
+float reflectionScale = 0.7; 
 //Includes//
 #include "/lib/vertex/waving.glsl"
 
@@ -457,12 +459,15 @@ float frametime = frameTimeCounter * ANIMATION_SPEED;
 #include "/lib/util/jitter.glsl"
 #endif
 
+
 #ifdef WORLD_CURVATURE
 #include "/lib/vertex/worldCurvature.glsl"
 #endif
 
+
 //Program//
 void main() {
+
 	texCoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
     
 	lmCoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
@@ -493,7 +498,7 @@ void main() {
 	
 	vTexCoord.xy    = sign(texMinMidCoord) * 0.5 + 0.5;
 	#endif
-    
+    float adjustedHeldBlockLightValue = 10000.0 * (1.0 - sunRotationData.x) * (1.0 - sunRotationData.y) * 0.5 + 10000.0 * 0.5;
 	color = gl_Color;
 	
 	mat = 0.0; recolor = 0.0;
@@ -510,22 +515,34 @@ void main() {
 		mat = 4.0;
 	if (mc_Entity.x == 10208)
 		mat = 5.0;
-
 	if (mc_Entity.x == 10201 || mc_Entity.x == 10205 || mc_Entity.x == 10206)
-		recolor = 1.0;
+		recolor = 1.0;		
 
 	if (mc_Entity.x == 10202)
 		lmCoord.x -= 0.0667;
-
-	if (mc_Entity.x == 10203)
+	
+	if (mc_Entity.x == 10203)	
 		lmCoord.x += 0.0667;
-
-	if (color.a < 0.1)
+  
+	if (mc_Entity.x == 10301)
+		// make it red
+		recolor = 100;	
+		
+	if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
+    float lightIntensity = texture2D(lightmap, lmCoord).r;
+    float reflectionScale = 0.7; 
+    float baseBrightness = 0.2;
+    float adjustedLightIntensity = max(lightIntensity * reflectionScale, baseBrightness);
+    
+    color.rgb *= vec3(adjustedLightIntensity);
+    color.rgb = max(color.rgb, vec3(0.1));
+}
+ 	if (color.a < 0.1)
 		color.a = 1.0;
 
 	const vec2 sunRotationData = vec2(cos(sunPathRotation * 0.01745329251994), -sin(sunPathRotation * 0.01745329251994));
 	float ang = fract(timeAngle - 0.25);
-	ang = (ang + (cos(ang * 3.14159265358979) * -0.5 + 0.5 - ang) / 3.0) * 6.28318530717959;
+	ang = (ang + (cos(ang * 3.14159265358979) * -0.5 + 0.5 - ang) / 3.0) * 6.28318530717959; 
 	sunVec = normalize((gbufferModelView * vec4(vec3(-sin(ang), cos(ang) * sunRotationData) * 2000.0, 1.0)).xyz);
 
 	upVec = normalize(gbufferModelView[1].xyz);
