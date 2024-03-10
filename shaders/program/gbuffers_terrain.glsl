@@ -296,10 +296,10 @@ void main() {
 					parallaxShadow, emission, subsurface, basicSubsurface);
 		
 		#ifdef ADVANCED_MATERIALS
-		float puddles = 0.0;
+		float puddles = 0.5;
 		#ifdef REFLECTION_RAIN
 		float pNoU = dot(outNormal, upVec);
-		if(wetness > 0.001) {
+		if(wetness > 1) {
 			puddles = GetPuddles(worldPos, newCoord, wetness) * clamp(pNoU, 0.0, 1.0);
 		}
 		
