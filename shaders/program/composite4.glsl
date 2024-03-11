@@ -26,23 +26,23 @@ float weight[6] = float[6](0.0556, 0.1667, 0.2777, 0.2777, 0.1667, 0.0556);
 
 //Common Functions//
 vec3 BloomTile(float lod, vec2 coord, vec2 offset) {
-	vec3 bloom = vec3(0.0), temp = vec3(0.0);
-	float scale = exp2(lod);
-	coord = (coord - offset) * scale;
-	vec2 padding = vec2(0.5) + 2.0 * view * scale;
+    vec3 bloom = vec3(0.0);
+    float scale = exp2(lod);
+    coord = (coord - offset) * scale;
+    vec2 padding = vec2(0.5) + 2.0 * view * scale;
 
-	if (abs(coord.x - 0.5) < padding.x && abs(coord.y - 0.5) < padding.y) {
-		for(int i = 0; i < 6; i++) {
-			for(int j = 0; j < 6; j++) {
-				float wg = weight[i] * weight[j];
-				vec2 pixelOffset = vec2((float(i) - 2.5) * pw, (float(j) - 2.5) * ph);
-				vec2 sampleCoord = coord + pixelOffset * scale;
-				bloom += texture2D(colortex0, sampleCoord).rgb * wg;
-			}
-		}
-	}
+    if (abs(coord.x - 0.5) < padding.x && abs(coord.y - 0.5) < padding.y) {
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                float wg = weight[i + 2] * weight[j + 2];
+                vec2 pixelOffset = vec2(float(i) * pw, float(j) * ph);
+                vec2 sampleCoord = coord + pixelOffset * scale;
+                bloom += texture2D(colortex0, sampleCoord).rgb * wg;
+            }
+        }
+    }
 
-	return pow(bloom / 32.0, vec3(0.25));
+    return pow(bloom / 32.0, vec3(0.25));
 }
 
 #include "/lib/util/dither.glsl"

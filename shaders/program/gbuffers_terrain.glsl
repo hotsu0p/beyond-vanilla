@@ -527,7 +527,20 @@ void main() {
 	if (mc_Entity.x == 10301)
 		// make it red
 		recolor = 100;	
+	if (mc_Entity.x == 10465) {
+    // Add a glowing effect to the entity
+    vec3 glowColor = vec3(0.5, 0.5, 0.0); // Adjust the color to make it glow
+
+    // Modify the albedo to simulate light emission
+    vec3 glowingColor = color.rgb + glowColor;
+
+    // Optional: Increase brightness for a stronger glow
+    color.rgb = mix(color.rgb, glowingColor, 0.5);
+}
+
+
 		
+
 	if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
     float lightIntensity = texture2D(lightmap, lmCoord).r;
     float reflectionScale = 0.7; 
