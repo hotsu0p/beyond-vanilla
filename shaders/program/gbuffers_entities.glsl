@@ -38,7 +38,7 @@ uniform float timeAngle, timeBrightness;
 uniform float viewWidth, viewHeight;
 
 uniform ivec2 eyeBrightnessSmooth;
-
+uniform float time;
 uniform vec3 cameraPosition;
 
 uniform vec4 entityColor;
@@ -152,7 +152,11 @@ void main() {
     vec3 darkerRed = entityColor.rgb * vec3(2.5, 0.0, 0.0);
     albedo.rgb = mix(albedo.rgb, darkerRed, entityColor.a);
 #endif
-	
+	if (entityId == 10301) { 
+		float pulse = 0.0005 * (1.0 + sin(frameTimeCounter * 1 * 3.14159265358979));
+		albedo.rgb = mix(albedo.rgb, vec3(94.0,223.0,255.0), pulse);
+	}
+
 	float lightningBolt = float(entityId == 10101);
 	if(lightningBolt > 0.5) {
 		#ifdef OVERWORLD
@@ -304,8 +308,9 @@ void main() {
 		albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
 		#endif
 	}
-
+	
     /* DRAWBUFFERS:0 */
+	
     gl_FragData[0] = albedo;
 	#ifdef MULTICOLORED_BLOCKLIGHT
 		/* DRAWBUFFERS:08 */
