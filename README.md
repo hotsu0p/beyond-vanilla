@@ -33,7 +33,7 @@ Github: https://github.com/hotsu0p/beyond-vanilla
 - Enjoy an immersive gaming experience with carefully crafted details.
 
 ### Compatibility:
-
+- highly recomennd https://modrinth.com/resourcepack/embrace-pixels for better visuals
 - Tested on iris and sodium 1.1.6.
 - Optimized for mid to low-tier devices.
 - Not tested on Optifine.
