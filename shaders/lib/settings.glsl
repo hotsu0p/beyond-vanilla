@@ -49,7 +49,7 @@ Please don't edit anything from Undefine section and onwards.
 //#define MCBL_LEGACY_COLOR
 
 //Material//
-//#define ADVANCED_MATERIALS
+  #define ADVANCED_MATERIALS
   #define MATERIAL_FORMAT 1 //[0 1]
 
   #define REFLECTION 2 //[0 1 2]
