@@ -538,7 +538,7 @@ void main() {
     color.rgb = mix(color.rgb, glowingColor, 0.5);
 }
 	if(mc_Entity.x == 10210){
-		color.rgb *= 0.45;
+		color.rgb *= 0.65;
 	}
 		
 
