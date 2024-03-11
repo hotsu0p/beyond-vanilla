@@ -527,6 +527,20 @@ void main() {
 	if (mc_Entity.x == 10301)
 		// make it red
 		recolor = 100;	
+	if (mc_Entity.x == 10465) {
+    // Add a glowing effect to the entity
+    vec3 glowColor = vec3(0.5, 0.5, 0.0); // Adjust the color to make it glow
+
+    // Modify the albedo to simulate light emission
+    vec3 glowingColor = color.rgb + glowColor;
+
+    // Optional: Increase brightness for a stronger glow
+    color.rgb = mix(color.rgb, glowingColor, 0.5);
+}
+	if(mc_Entity.x == 10210){
+		color.rgb *= 0.45;
+	}
+		
 
 		
 
