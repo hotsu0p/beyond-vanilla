@@ -5,7 +5,7 @@
 ### Installation Guide:
 
 ## Links
-Modrinth: https://modrinth.com/shader/beyond-vanilla\
+Modrinth: https://modrinth.com/shader/beyond-vanilla \
 forge: (Soon)\
 Github: https://github.com/hotsu0p/beyond-vanilla
 
