@@ -59,7 +59,22 @@ void RoundSunMoon(inout vec3 color, vec3 viewPos, vec3 sunColor, vec3 moonColor)
 	vec3 sunMoonCol = mix(moonColor * moonVisibility, sunColor * sunVisibility, float(VoL > 0.0));
 	color += sun * sunMoonCol * 16.0;
 }
+// Function to draw stars
+void DrawStars(inout vec3 albedo, vec3 viewPos) {
+    // Define the star density (number of stars per unit volume)
+    float starDensity = 0.0001;
 
+    // Calculate the star pattern based on the view position
+    // This is a simple noise-based approach to generate stars
+    float starPattern = fract(sin(dot(viewPos, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+
+    // Apply the star pattern to the sky color
+    // This example uses a simple threshold to determine if a star is visible
+    // You can adjust the threshold and the color of the stars as needed
+    if (starPattern > 0.99) {
+        albedo += vec3(1.0, 1.0, 1.0) * starDensity; // White stars
+    }
+}
 void SunGlare(inout vec3 color, vec3 viewPos, vec3 lightCol) {
 	float VoL = dot(normalize(viewPos), lightVec);
 	float visfactor = 0.05 * (-0.8 * timeBrightness + 1.0) * (3.0 * rainStrength + 1.0);
