@@ -161,7 +161,6 @@ vec3 GetWaterNormal(vec3 worldPos, vec3 viewPos, vec3 viewVector) {
 	vec3 normalMap = vec3(xDelta, yDelta, 1.0 - (xDelta * xDelta + yDelta * yDelta));
 	return normalMap * normalStrength + vec3(0.0, 0.0, 1.0 - normalStrength);
 }
-// Check if the water is in a cauldron
 
 //Includes//
 #include "/lib/color/blocklightColor.glsl"
@@ -233,7 +232,7 @@ void main() {
 		
 		float metalness       = 0.0;
 		float emission        = portal * 0.4;
-		float subsurface      = 0.0;
+		float subsurface      = 10.0;
 		float basicSubsurface = water;
 		vec3 baseReflectance  = vec3(0.04);
 		
