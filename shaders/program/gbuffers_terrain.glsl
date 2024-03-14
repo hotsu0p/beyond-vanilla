@@ -461,7 +461,7 @@ float reflectionScale = 0.7;
 
 
 
-
+float emission = 10.0;
 #ifdef WORLD_CURVATURE
 #include "/lib/vertex/worldCurvature.glsl"
 #endif
@@ -529,6 +529,11 @@ void main() {
 	if (mc_Entity.x == 10301)
 		// make it red
 		recolor = 100;	
+	if (mc_Entity.x == 10056) {
+    color.rgb *= 1.5;
+    emission = 1.0; // Set the emission intensity to 1.0 (fully emissive)
+}
+
 	if(mc_Entity.x == 10000){
 		float pulse = sin(frameTimeCounter * 0.1 * 3.14159265358979); 
 		pulse = (pulse + 1.0) * 0.5;
@@ -540,8 +545,15 @@ void main() {
 
 		color.rgb = finalColor;
 	}
-
-
+	if (mc_Entity.x == 10210) {
+		color.rgb *= 1.15;
+	}
+	if (mc_Entity.x == 10211) {
+		color.rgb *= 1.25;
+	}
+	if (mc_Entity.x == 10212) {
+		color.rgb *= 1.35;
+	}
 		if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
 		float lightIntensity = texture2D(lightmap, lmCoord).r;
 		float reflectionScale = 0.7; 
@@ -577,6 +589,7 @@ void main() {
 
 		color.rgb = finalColor;
 	}
+	
  	if (color.a < 0.1)
 		color.a = 1.0;
 
