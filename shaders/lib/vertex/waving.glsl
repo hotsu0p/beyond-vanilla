@@ -84,6 +84,7 @@ vec3 WavingBlocks(vec3 position, float istopv) {
     #ifdef WAVING_GRASS
     if (mc_Entity.x == 10100 && istopv > 0.9)
         wave += CalcMove(worldpos, 0.35, 1.0, vec2(0.25, 0.06));
+        
     #endif
 
     #ifdef WAVING_CROP
@@ -111,9 +112,9 @@ vec3 WavingBlocks(vec3 position, float istopv) {
         wave += CalcMove(worldpos, 0.25, .80, vec2(0.04, 0.04));
     #endif
 
-    #ifdef WAVING_VINE
+   #ifdef WAVING_VINE
     if (mc_Entity.x == 10106)
-        wave += CalcMove(worldpos, 0.35, 1.25, vec2(0.06, 0.06));     
+        wave += CalcMove(worldpos, 0.5, 1.0, vec2(0.04, 0.04)); 
     #endif
     
     #ifdef WAVING_LAVA
