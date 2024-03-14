@@ -404,13 +404,9 @@ if (blockEntityId == 10401) {
    albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
    #endif
 }
-
-
-
-
-
-
-
+if (blockEntityId == 10109){
+	albedo.rgb = vec3(0.5,0.5,1.0);
+}
 
 
     /* DRAWBUFFERS:0 */

@@ -51,7 +51,7 @@ Please don't edit anything from Undefine section and onwards.
 //Material//
   #define ADVANCED_MATERIALS
   #define MATERIAL_FORMAT 1 //[0 1]
-
+  #define GLOWING_ORES
   #define REFLECTION 2 //[0 1 2]
   #define REFLECTION_TRANSLUCENT
   #define REFLECTION_SPECULAR

@@ -533,7 +533,7 @@ void main() {
     color.rgb *= 1.5;
     emission = 1.0; // Set the emission intensity to 1.0 (fully emissive)
 }
-
+	
 	if(mc_Entity.x == 10000){
 		float pulse = sin(frameTimeCounter * 0.1 * 3.14159265358979); 
 		pulse = (pulse + 1.0) * 0.5;
@@ -554,6 +554,17 @@ void main() {
 	if (mc_Entity.x == 10212) {
 		color.rgb *= 1.35;
 	}
+	
+	if (mc_Entity.x == 10219){
+    vec3 oreColor = vec3(1.0, 1.0 , 1.0);
+    float lightIntensity = 0.000001; 
+    color.rgb += oreColor * lightIntensity; 
+	}
+	if (mc_Entity.x == 10220){
+    vec3 oreColor = vec3(1.0, 1.0 , 1.0); 
+    float lightIntensity = .5;
+    color.rgb += oreColor * lightIntensity;
+	}
 		if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
 		float lightIntensity = texture2D(lightmap, lmCoord).r;
 		float reflectionScale = 0.7; 
@@ -566,6 +577,7 @@ void main() {
 	if ( mc_Entity.x == 10046){
 			color.rgb *= 1.2;
 	}
+
 	if ( mc_Entity.x == 10048){
 	float pulse = sin(frameTimeCounter * 1.25 * 3.14159265358979); 
 		pulse = (pulse + 1.0) * 0.5;

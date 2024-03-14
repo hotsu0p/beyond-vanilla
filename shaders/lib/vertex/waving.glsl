@@ -29,8 +29,6 @@ vec3 CalcMove(vec3 pos, float density, float speed, vec2 mult) {
     return wave * vec3(mult, mult.x);
 }
 
-
-
 float CalcLilypadMove(vec3 worldpos) {
     worldpos.z -= 0.125;
     float wave = sin(2 * pi * (constantTime * 0.7 + worldpos.x * 0.14 + worldpos.z * 0.07)) +
@@ -149,7 +147,9 @@ vec3 WavingBlocks(vec3 position, float istopv) {
         wave.z += cos(worldpos.y * swingSpeed + frametime) * swingAmplitude * swingDirection;
     }
     #endif
- 
+    if (mc_Entity.x == 10109 && istopv > 0.9) {
+   wave += CalcMove(worldpos, 0.35, 1.15, vec2(0.15, 0.06));
+    }
     position += wave;
 
     return position;
