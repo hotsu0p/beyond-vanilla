@@ -110,6 +110,7 @@ vec3 WavingBlocks(vec3 position, float istopv) {
     #ifdef WAVING_LEAF
     if (mc_Entity.x == 10105)
         wave += CalcMove(worldpos, 0.25, .80, vec2(0.04, 0.04));
+        
     #endif
 
    #ifdef WAVING_VINE
@@ -137,12 +138,18 @@ vec3 WavingBlocks(vec3 position, float istopv) {
             vec2 lateralMovement = vec2(1 * sin(worldpos.y * 10), 0.0);
             vec3 adjustedWorldPos = worldpos + vec3(lateralMovement, 0.0); 
             wave += CalcMove(adjustedWorldPos, 0.005, 0.05, vec2(.07, 0.05));
-        }
-
-    
-#endif
-
-
+        }  
+    #endif
+    #ifdef WAVING_BELL
+     if (mc_Entity.x == 10044 && istopv > 0.9) {
+        float swingSpeed = 0.05;
+        float swingAmplitude = 0.01;
+        float swingDirection = 1.0;
+        wave.x += sin(worldpos.y * swingSpeed + frametime) * swingAmplitude * swingDirection;
+        wave.z += cos(worldpos.y * swingSpeed + frametime) * swingAmplitude * swingDirection;
+    }
+    #endif
+ 
     position += wave;
 
     return position;

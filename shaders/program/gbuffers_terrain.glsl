@@ -460,6 +460,8 @@ float reflectionScale = 0.7;
 #endif
 
 
+
+
 #ifdef WORLD_CURVATURE
 #include "/lib/vertex/worldCurvature.glsl"
 #endif
@@ -527,29 +529,54 @@ void main() {
 	if (mc_Entity.x == 10301)
 		// make it red
 		recolor = 100;	
-if(mc_Entity.x == 10000){
-    float pulse = sin(frameTimeCounter * 0.1 * 3.14159265358979); 
-    pulse = (pulse + 1.0) * 0.5;
+	if(mc_Entity.x == 10000){
+		float pulse = sin(frameTimeCounter * 0.1 * 3.14159265358979); 
+		pulse = (pulse + 1.0) * 0.5;
 
-    vec3 baseColor = vec3(1.0, 1.0, 1.0); 
-    vec3 lightColor = vec3(1.0, 0.5, 0.0);
+		vec3 baseColor = vec3(1.0, 1.0, 1.0); 
+		vec3 lightColor = vec3(1.0, 0.5, 0.0);
 
-    vec3 finalColor = mix(baseColor, lightColor, pulse * 0.3); 
+		vec3 finalColor = mix(baseColor, lightColor, pulse * 0.3); 
 
-    color.rgb = finalColor;
-}
+		color.rgb = finalColor;
+	}
 
+
+		if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
+		float lightIntensity = texture2D(lightmap, lmCoord).r;
+		float reflectionScale = 0.7; 
+		float baseBrightness = 0.2;
+		float adjustedLightIntensity = max(lightIntensity * reflectionScale, baseBrightness);
 		
+		color.rgb *= vec3(adjustedLightIntensity);
+		color.rgb = max(color.rgb, vec3(0.1));
+	}
+	if ( mc_Entity.x == 10046){
+			color.rgb *= 1.2;
+	}
+	if ( mc_Entity.x == 10048){
+	float pulse = sin(frameTimeCounter * 1.25 * 3.14159265358979); 
+		pulse = (pulse + 1.0) * 0.5;
 
-	if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
-    float lightIntensity = texture2D(lightmap, lmCoord).r;
-    float reflectionScale = 0.7; 
-    float baseBrightness = 0.2;
-    float adjustedLightIntensity = max(lightIntensity * reflectionScale, baseBrightness);
-    
-    color.rgb *= vec3(adjustedLightIntensity);
-    color.rgb = max(color.rgb, vec3(0.1));
-}
+		vec3 baseColor = vec3(1.0, 1.0, 1.0); 
+		vec3 lightColor = vec3(1.0, 0.5, 0.0);
+
+		vec3 finalColor = mix(baseColor, lightColor, pulse * 0.3); 
+
+		color.rgb = finalColor;
+
+	}
+	if (mc_Entity.x == 10052){
+		float pulse = sin(frameTimeCounter * 1.7 * 3.14159265358979); 
+		pulse = (pulse + 1.0) * 0.5;
+
+		vec3 baseColor = vec3(1.0, 1.0, 1.0); 
+		vec3 lightColor = vec3(1.0, 0.5, 0.0);
+
+		vec3 finalColor = mix(baseColor, lightColor, pulse * 0.3); 
+
+		color.rgb = finalColor;
+	}
  	if (color.a < 0.1)
 		color.a = 1.0;
 

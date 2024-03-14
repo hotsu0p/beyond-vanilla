@@ -373,7 +373,7 @@ Please don't edit anything from Undefine section and onwards.
   #define WAVING_FIRE
   #define WAVING_LANTERN
   #define WAVING_CHAIN
-  
+  #define WAVING_BELL
 //Undefine//
   #ifdef NETHER
   #undef LIGHT_SHAFT
