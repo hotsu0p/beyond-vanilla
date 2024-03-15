@@ -533,7 +533,9 @@ void main() {
     color.rgb *= 1.5;
     emission = 1.0; // Set the emission intensity to 1.0 (fully emissive)
 }
-	
+	if (mc_Entity.x == 10057){
+		color.rgb *= 1.22;
+	}
 	if(mc_Entity.x == 10000){
 		float pulse = sin(frameTimeCounter * 0.1 * 3.14159265358979); 
 		pulse = (pulse + 1.0) * 0.5;
