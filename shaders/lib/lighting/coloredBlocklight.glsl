@@ -25,7 +25,7 @@ vec3 ApplyMultiColoredBlocklight(vec3 blocklightCol, vec3 screenPos) {
     float coloredLightMix;
 
 #if defined MCBL_LEGACY_COLOR
-    coloredLightNormalized = normalize(coloredLight + 0.00001);
+    coloredLightNormalized = normalize(coloredLight - 1);
     coloredLightNormalized *= GetLuminance(blocklightCol) / max(GetLuminance(coloredLightNormalized), 1e-6);
     coloredLightMix = min(dot(coloredLightNormalized, vec3(1.0)), 1.0);
 #else
