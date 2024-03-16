@@ -127,11 +127,11 @@ void GetLighting(inout vec3 albedo, out vec3 shadow, vec3 viewPos, vec3 worldPos
     desatColor = mix(vec3(0.4), desatColor, sqrt(lightmap.y)) * 1.7;
     #endif
 
-    #ifdef NETHER
-    float desatAmount = 1.0 - smoothstep(0.25,1.0,(1.0 - lightmap.x) * (1.0 - lightmap.x)) * (1.0 - lightFlatten);
+  #ifdef NETHER
+float desatAmount = 0.9 - smoothstep(0.25,1.0,(1.0 - lightmap.x) * (1.0 - lightmap.x)) * (1.0 - lightFlatten) * 1.5;
 
-    vec3 desatColor = normalize(netherColSqrt.rgb + 0.000001) * 1.7;
-    #endif
+vec3 desatColor = normalize(netherColSqrt.rgb + 0.000001) * 2.0;
+#endif
 
     #ifdef END
     float desatAmount = 1.0 - smoothstep(0.25,1.0,(1.0 - lightmap.x) * (1.0 - lightmap.x)) * (1.0 - lightFlatten);

@@ -733,12 +733,10 @@ void main() {
 	
 	mat = 0.0;
 	
-	if (mc_Entity.x == 10300 || mc_Entity.x == 10304) mat = 1.0;
+	if (mc_Entity.x == 10300 || mc_Entity.x == 10304 || mc_Entity.x == 10048) mat = 1.0;
 	if (mc_Entity.x == 10301)						  mat = 0.0;
 	if (mc_Entity.x == 10302) 						  mat = 3.0;
-	// Add a custom texture sampler for the Nether portal
 
-// In the main function, sample the texture and apply it to the portal
 
 	const vec2 sunRotationData = vec2(
 		 cos(sunPathRotation * 0.01745329251994),
