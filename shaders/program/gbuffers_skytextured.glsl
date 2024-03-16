@@ -76,7 +76,9 @@ void main() {
 	#endif
 
 	#ifdef END
-	albedo.rgb = pow(albedo.rgb,vec3(2.2));
+   
+    albedo.rgb *= 0.02; // Apply fog factor to brightness
+
 
 	#ifdef SKY_DESATURATION
 	albedo.rgb = GetLuminance(albedo.rgb) * endCol.rgb;
@@ -110,7 +112,7 @@ uniform float timeAngle;
 
 uniform mat4 gbufferModelView;
 
-#ifdef TAA
+#ifdef TAA	
 uniform int frameCounter;
 
 uniform float viewWidth;

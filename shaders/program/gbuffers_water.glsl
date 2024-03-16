@@ -161,7 +161,6 @@ vec3 GetWaterNormal(vec3 worldPos, vec3 viewPos, vec3 viewVector) {
 	vec3 normalMap = vec3(xDelta, yDelta, 1.0 - (xDelta * xDelta + yDelta * yDelta));
 	return normalMap * normalStrength + vec3(0.0, 0.0, 1.0 - normalStrength);
 }
-// Check if the water is in a cauldron
 
 //Includes//
 #include "/lib/color/blocklightColor.glsl"
@@ -233,7 +232,7 @@ void main() {
 		
 		float metalness       = 0.0;
 		float emission        = portal * 0.4;
-		float subsurface      = 0.0;
+		float subsurface      = 10.0;
 		float basicSubsurface = water;
 		vec3 baseReflectance  = vec3(0.04);
 		
@@ -734,12 +733,10 @@ void main() {
 	
 	mat = 0.0;
 	
-	if (mc_Entity.x == 10300 || mc_Entity.x == 10304) mat = 1.0;
+	if (mc_Entity.x == 10300 || mc_Entity.x == 10304 || mc_Entity.x == 10048) mat = 1.0;
 	if (mc_Entity.x == 10301)						  mat = 0.0;
 	if (mc_Entity.x == 10302) 						  mat = 3.0;
-	// Add a custom texture sampler for the Nether portal
 
-// In the main function, sample the texture and apply it to the portal
 
 	const vec2 sunRotationData = vec2(
 		 cos(sunPathRotation * 0.01745329251994),

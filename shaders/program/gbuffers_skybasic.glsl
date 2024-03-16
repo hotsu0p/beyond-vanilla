@@ -59,7 +59,7 @@ void RoundSunMoon(inout vec3 color, vec3 viewPos, vec3 sunColor, vec3 moonColor)
 	vec3 sunMoonCol = mix(moonColor * moonVisibility, sunColor * sunVisibility, float(VoL > 0.0));
 	color += sun * sunMoonCol * 16.0;
 }
-
+// Function to draw star
 void SunGlare(inout vec3 color, vec3 viewPos, vec3 lightCol) {
 	float VoL = dot(normalize(viewPos), lightVec);
 	float visfactor = 0.05 * (-0.8 * timeBrightness + 1.0) * (3.0 * rainStrength + 1.0);
@@ -131,7 +131,7 @@ void main() {
 	#endif
 	
 	#ifdef END
-	vec3 albedo = vec3(0.0);
+	vec3 albedo = vec3(1.0);
 	#endif
 	
     /* DRAWBUFFERS:0 */

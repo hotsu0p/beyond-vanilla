@@ -460,6 +460,8 @@ float reflectionScale = 0.7;
 #endif
 
 
+
+float emission = 10.0;
 #ifdef WORLD_CURVATURE
 #include "/lib/vertex/worldCurvature.glsl"
 #endif
@@ -527,16 +529,92 @@ void main() {
 	if (mc_Entity.x == 10301)
 		// make it red
 		recolor = 100;	
+	if (mc_Entity.x == 10056) {
+    color.rgb *= 1.5;
+    emission = 1.0;
+	}
+	if (mc_Entity.x == 10057){
+		color.rgb *= 1.22;
+	}
+	if (mc_Entity.x == 10045){
+		float pulse = sin(frameTimeCounter * .5 * 3.14159265358979); 
+		pulse = (pulse + 1.0) * 0.5;
+
+		vec3 baseColor = vec3(1.0, 1.0, 1.0); 
+		vec3 lightColor = vec3(1.0, 0.5, 0.0);
+
+		vec3 finalColor = mix(baseColor, lightColor, pulse * 0.3); 
+
+		color.rgb = finalColor;
+	}
+	if(mc_Entity.x == 10000){
+		float pulse = sin(frameTimeCounter * 0.1 * 3.14159265358979); 
+		pulse = (pulse + 1.0) * 0.5;
+
+		vec3 baseColor = vec3(1.0, 1.0, 1.0); 
+		vec3 lightColor = vec3(1.0, 0.5, 0.0);
+
+		vec3 finalColor = mix(baseColor, lightColor, pulse * 0.3); 
+
+		color.rgb = finalColor;
+	}
+	if (mc_Entity.x == 10210) {
+		color.rgb *= 1.15;
+	}
+	if (mc_Entity.x == 10211) {
+		color.rgb *= 1.25;
+	}
+	if (mc_Entity.x == 10212) {
+		color.rgb *= 1.35;
+	}
+	
+	if (mc_Entity.x == 10219){
+    vec3 oreColor = vec3(1.0, 1.0 , 1.0);
+    float lightIntensity = 0.000001; 
+    color.rgb += oreColor * lightIntensity; 
+	}
+	if (mc_Entity.x == 10220){
+    vec3 oreColor = vec3(1.0, 1.0 , 1.0); 
+    float lightIntensity = .5;
+    color.rgb += oreColor * lightIntensity;
+	}
+		if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
+		float lightIntensity = texture2D(lightmap, lmCoord).r;
+		float reflectionScale = 0.7; 
+		float baseBrightness = 0.2;
+		float adjustedLightIntensity = max(lightIntensity * reflectionScale, baseBrightness);
 		
-	if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
-    float lightIntensity = texture2D(lightmap, lmCoord).r;
-    float reflectionScale = 0.7; 
-    float baseBrightness = 0.2;
-    float adjustedLightIntensity = max(lightIntensity * reflectionScale, baseBrightness);
-    
-    color.rgb *= vec3(adjustedLightIntensity);
-    color.rgb = max(color.rgb, vec3(0.1));
-}
+		color.rgb *= vec3(adjustedLightIntensity);
+		color.rgb = max(color.rgb, vec3(0.1));
+	}
+	if ( mc_Entity.x == 10046){
+			color.rgb *= 1.2;
+	}
+
+	if ( mc_Entity.x == 10048){
+	float pulse = sin(frameTimeCounter * 1.25 * 3.14159265358979); 
+		pulse = (pulse + 1.0) * 0.5;
+
+		vec3 baseColor = vec3(1.0, 1.0, 1.0); 
+		vec3 lightColor = vec3(1.0, 0.5, 0.0);
+
+		vec3 finalColor = mix(baseColor, lightColor, pulse * 0.3); 
+
+		color.rgb = finalColor;
+
+	}
+	if (mc_Entity.x == 10052){
+		float pulse = sin(frameTimeCounter * 1.7 * 3.14159265358979); 
+		pulse = (pulse + 1.0) * 0.5;
+
+		vec3 baseColor = vec3(1.0, 1.0, 1.0); 
+		vec3 lightColor = vec3(1.0, 0.5, 0.0);
+
+		vec3 finalColor = mix(baseColor, lightColor, pulse * 0.3); 
+
+		color.rgb = finalColor;
+	}
+	
  	if (color.a < 0.1)
 		color.a = 1.0;
 

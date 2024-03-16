@@ -159,9 +159,9 @@ void main() {
 
 		float emissive = (GetHandItem(50) + GetHandItem(89) + GetHandItem(213));
 		
-		float metalness      = 0.0;
-		float emission       = emissive * 0.25;
-		float subsurface     = 0.0;
+		float metalness  = 0.0;
+		float emission  = emissive * 0.25;
+		float subsurface  = 0.0;
 		vec3 baseReflectance = vec3(0.04);
 		
 		emission *= dot(albedo.rgb, albedo.rgb) * 0.333;
@@ -178,8 +178,7 @@ void main() {
 		float f0 = 0.0, porosity = 0.5, ao = 1.0;
 		vec3 normalMap = vec3(0.0, 0.0, 1.0);
 		
-		GetMaterials(smoothness, metalness, f0, emission, subsurface, porosity, ao, normalMap,
-					 newCoord, dcdx, dcdy);
+		GetMaterials(smoothness, metalness, f0, emission, subsurface, porosity, ao, normalMap, newCoord, dcdx, dcdy);
 
 		#ifdef NORMAL_SKIP
 		normalMap = vec3(0.0, 0.0, 1.0);
@@ -289,8 +288,7 @@ void main() {
 		#if (defined OVERWORLD || defined END) && (defined ADVANCED_MATERIALS || defined SPECULAR_HIGHLIGHT_ROUGH)
 		vec3 specularColor = GetSpecularColor(lightmap.y, metalness, baseReflectance);
 		
-		albedo.rgb += GetSpecularHighlight(newNormal, viewPos, smoothness, baseReflectance,
-										   specularColor, shadow * vanillaDiffuse, 1.0);
+		albedo.rgb += GetSpecularHighlight(newNormal, viewPos, smoothness, baseReflectance, specularColor, shadow * vanillaDiffuse, 1.0);
 		#endif
 
 		#if defined ADVANCED_MATERIALS && defined REFLECTION_SPECULAR && defined REFLECTION_ROUGH
@@ -384,7 +382,7 @@ attribute vec4 mc_Entity;
 attribute vec4 mc_midTexCoord;
 attribute vec4 at_tangent;
 #endif
-
+uniform int heldItemId;
 
 //Common Variables//
 #ifdef WORLD_TIME_ANIMATION
@@ -404,6 +402,7 @@ float frametime = frameTimeCounter * ANIMATION_SPEED;
 
 //Program//
 void main() {
+	 float emission = 0.0; // Initialize emission variable
 	texCoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
     
 	lmCoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
@@ -433,7 +432,6 @@ void main() {
 	#endif
     
 	color = gl_Color;
-
 	isMainHand = float(gl_ModelViewMatrix[3][0] > 0.0);
 
 	const vec2 sunRotationData = vec2(cos(sunPathRotation * 0.01745329251994), -sin(sunPathRotation * 0.01745329251994));

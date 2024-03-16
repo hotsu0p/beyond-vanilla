@@ -106,27 +106,27 @@ void NormalFog(inout vec3 color, vec3 viewPos) {
 	#endif
 
 	#ifdef NETHER
-	float viewLength = length(viewPos);
-	float fog = 2.0 * pow(viewLength * FOG_DENSITY / 256.0, 1.5);
-	#if DISTANT_FADE == 2 || DISTANT_FADE == 3
-	fog += 6.0 * pow(fogFactor * 1.5 / far, 4.0);
+		float viewLength = length(viewPos);
+		float fog = 2.0 * pow(viewLength * FOG_DENSITY / 256.0, 1.5);
+		#if DISTANT_FADE == 2 || DISTANT_FADE == 3
+		fog += 6.0 * pow(fogFactor * 1.5 / far, 4.0);
+		#endif
+		fog = 1.0 - exp(-fog);
+		vec3 fogColor = netherCol.rgb * 0.0425;
 	#endif
-	fog = 1.0 - exp(-fog);
-	vec3 fogColor = netherCol.rgb * 0.0425;
-	#endif
-
+ 
 	#ifdef END
-	float fog = length(viewPos) * FOG_DENSITY / 128.0;
-	#if DISTANT_FADE == 2 || DISTANT_FADE == 3
-	fog += 6.0 * pow(fogFactor * 1 / far, 6.0);
+		// No fog effect
+		float fog = length(viewPos) * FOG_DENSITY / 12800.0; // Removed fog calculation
+		#if DISTANT_FADE == 2 || DISTANT_FADE == 3
+		fog += 6.0 * pow(fogFactor * 1 / far, 6.0);
+		#endif
+		fog = 1.0 - exp(-0.8 * fog * fog);
+		vec3 fogColor = endCol.rgb * 0.000625; // Reduced fogColor intensity to make fog less visible
+		#ifndef LIGHT_SHAFT
+		fogColor *= 1.0; // Reduced fogColor multiplier to make fog less intense
+		#endif
 	#endif
-	fog = 1.0 - exp(-0.8 * fog * fog);
-	vec3 fogColor = endCol.rgb * 0.00625;
-	#ifndef LIGHT_SHAFT
-	fogColor *= 2.5;
-	#endif
-	#endif
-
 	color = mix(color, fogColor, fog);
 }
 

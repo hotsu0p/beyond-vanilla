@@ -49,9 +49,9 @@ Please don't edit anything from Undefine section and onwards.
 //#define MCBL_LEGACY_COLOR
 
 //Material//
-//#define ADVANCED_MATERIALS
+  #define ADVANCED_MATERIALS
   #define MATERIAL_FORMAT 1 //[0 1]
-
+  #define GLOWING_ORES
   #define REFLECTION 2 //[0 1 2]
   #define REFLECTION_TRANSLUCENT
   #define REFLECTION_SPECULAR
@@ -373,7 +373,7 @@ Please don't edit anything from Undefine section and onwards.
   #define WAVING_FIRE
   #define WAVING_LANTERN
   #define WAVING_CHAIN
-  
+  #define WAVING_BELL
 //Undefine//
   #ifdef NETHER
   #undef LIGHT_SHAFT
