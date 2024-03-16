@@ -156,7 +156,12 @@ void main() {
 		float pulse = 0.0005 * (1.0 + sin(frameTimeCounter * 1 * 3.14159265358979));
 		albedo.rgb = mix(albedo.rgb, vec3(94.0,223.0,255.0), pulse);
 	}
+	if (entityId == 10102){
+		float pulse = .15 * (1.0 + sin(frameTimeCounter * 1 * 3.14159265358979));
+		albedo.rgb = mix(albedo.rgb, vec3(0.0,0.0,0.0), pulse);
+	}
 	float lightningBolt = float(entityId == 10101);
+
 	if(lightningBolt > 0.5) {
 		#ifdef OVERWORLD
 		albedo.rgb = weatherCol.rgb / weatherCol.a;
