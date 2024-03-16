@@ -24,16 +24,14 @@ vec3 ApplyMultiColoredBlocklight(vec3 blocklightCol, vec3 screenPos) {
     vec3 coloredLightNormalized;
     float coloredLightMix;
 
-#if defined MCBL_LEGACY_COLOR
-    coloredLightNormalized = normalize(coloredLight - 1);
-    coloredLightNormalized *= GetLuminance(blocklightCol) / max(GetLuminance(coloredLightNormalized), 1e-6);
-    coloredLightMix = min(dot(coloredLightNormalized, vec3(1.0)), 1.0);
-#else
     coloredLightNormalized = normalize(coloredLight + 1e-6);
-    coloredLightNormalized = mix(coloredLightNormalized * coloredLightNormalized, vec3(1.0), 0.125);
-    coloredLightNormalized *= GetLuminance(blocklightCol) * 1.7;
+    coloredLightNormalized = mix(coloredLightNormalized * coloredLightNormalized, vec3(1.0), 0.1);
+    coloredLightNormalized *= GetLuminance(blocklightCol) * 1.2; // Adjust the multiplier here
+    coloredLightNormalized = mix(coloredLightNormalized, vec3(0.5, 0.6, 1.0), 0.5); // Introduce a colder tone
     coloredLightMix = min(dot(coloredLightNormalized, vec3(1.0)), 1.0);
-#endif
 
-    return mix(blocklightCol, coloredLightNormalized, coloredLightMix);
+    // Adjust the mix factor based on distance or other criteria if needed
+    float mixFactor = clamp(length(screenPos.xy - vec2(0.5)) * 2.0, 0.0, 1.0);
+    
+    return mix(blocklightCol, coloredLightNormalized, coloredLightMix * mixFactor);
 }
