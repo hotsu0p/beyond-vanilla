@@ -1,3 +1,8 @@
+v2.5.1 - 3/16/24
+  - Fixed overworld lighting
+  - Improved skulk
+  - Added pulse to end crystals
+        
 v2.5 - 3/16/24
  - Fixed light source bug
  - Improved Nether ligting

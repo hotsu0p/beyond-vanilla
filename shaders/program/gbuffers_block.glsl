@@ -22,9 +22,9 @@ varying vec3 viewVector;
 
 varying vec4 vTexCoord, vTexCoordAM;
 #endif
-uniform bool isHighlighted; // Add this line to declare the isHighlighted variable
+uniform bool isHighlighted;
 
-uniform vec3 cameraDirection; // This should be the direction the camera is pointing
+uniform vec3 cameraDirection; 
 
 //Uniforms//
 uniform int blockEntityId;
@@ -354,60 +354,59 @@ void main() {
 		if(blockEntityId == 10205) albedo.a = sqrt(albedo.a);
 		#endif
 	}
-if (blockEntityId == 10401) {
-   vec2 portalCoord = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
-   portalCoord = (portalCoord - 0.5) * vec2(aspectRatio, 1.0);
+		if (blockEntityId == 10401) {
+		vec2 portalCoord = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
+		portalCoord = (portalCoord - 0.5) * vec2(aspectRatio, 1.0);
 
-   vec3 portColSqrt = vec3(END_R, END_G, END_B) / 255.0 * END_I;
-   vec3 portCol = portColSqrt * portColSqrt * 0.05;
-   vec2 wind = vec2(0, frametime * 0.025);
+		vec3 portColSqrt = vec3(END_R, END_G, END_B) / 255.0 * END_I;
+		vec3 portCol = portColSqrt * portColSqrt * 0.05;
+		vec2 wind = vec2(0, frametime * 0.025);
 
-   portCol += texture2D(noisetex, portalCoord * 0.1 + wind * 0.05).rgb * 0.05 * portColSqrt * portColSqrt * 0.05;
-   portCol += vec3(0.2, 0.5, 0.7);
+		portCol += texture2D(noisetex, portalCoord * 0.1 + wind * 0.05).rgb * 0.05 * portColSqrt * portColSqrt * 0.05;
+		portCol += vec3(0.2, 0.5, 0.7);
 
-   float portal = texture2D(noisetex, portalCoord * 0.1 + wind * 0.05).r * 0.2 + 0.8;
+		float portal = texture2D(noisetex, portalCoord * 0.1 + wind * 0.05).r * 0.2 + 0.8;
 
-   float glowFactor = step(mod(frameTimeCounter, 200), 1.0);  
-   portal += glowFactor * (sin(frameCounter * 0.1) * 0.1 + 0.1);  
+		float glowFactor = step(mod(frameTimeCounter, 200), 1.0);  
+		portal += glowFactor * (sin(frameCounter * 0.1) * 0.1 + 0.1);  
 
-   #ifdef END
-       portal *= 0.05;  
-   #else
-       portal *= 0.02; 
-   #endif
+		#ifdef END
+			portal *= 0.05;  
+		#else
+			portal *= 0.02; 
+		#endif
 
-   portal += texture2D(texture, portalCoord * 0.5 + wind).r * 0.5;
-   portal += texture2D(texture, portalCoord + wind + 0.15).r * 0.5;
-   portal += texture2D(texture, portalCoord * 2.0 + wind + 0.30).r * 0.3;
-   portal += texture2D(texture, portalCoord * 4.0 + wind + 0.45).r * 0.2;
+		portal += texture2D(texture, portalCoord * 0.5 + wind).r * 0.5;
+		portal += texture2D(texture, portalCoord + wind + 0.15).r * 0.5;
+		portal += texture2D(texture, portalCoord * 2.0 + wind + 0.30).r * 0.3;
+		portal += texture2D(texture, portalCoord * 4.0 + wind + 0.45).r * 0.2;
 
-   albedo.rgb = portal * portal * portCol.rgb;
-   albedo.a = 100.0;
+		albedo.rgb = portal * portal * portCol.rgb;
+		albedo.a = 100.0;
 
-   lightAlbedo = normalize(albedo.rgb * 10.0 + 0.00001);
+		lightAlbedo = normalize(albedo.rgb * 10.0 + 0.00001);
 
-   albedo.rgb = hue2(albedo.rgb, 150.0); 
-   float vignette = length((gl_FragCoord.xy / vec2(viewWidth, viewHeight) - 0.5) * 2.0);
-   vignette = smoothstep(0.9, 1.0, 1.0 - vignette);
-   albedo.rgb *= mix(1.0, 0.9, vignette);
+		albedo.rgb = hue2(albedo.rgb, 150.0); 
+		float vignette = length((gl_FragCoord.xy / vec2(viewWidth, viewHeight) - 0.5) * 2.0);
+		vignette = smoothstep(0.9, 1.0, 1.0 - vignette);
+		albedo.rgb *= mix(1.0, 0.9, vignette);
 
-   float pulsateGlow = sin(frameCounter * 0.05) * 0.1 + 0.9;
-   albedo.rgb *= pulsateGlow;
+		float pulsateGlow = sin(frameCounter * 0.05) * 0.1 + 0.9;
+		albedo.rgb *= pulsateGlow;
 
-   float distortion = noise(gl_FragCoord.xy * 0.01);
-   albedo.rgb *= mix(1.0, 1.0 + distortion * 0.05, 0.5);
+		float distortion = noise(gl_FragCoord.xy * 0.01);
+		albedo.rgb *= mix(1.0, 1.0 + distortion * 0.05, 0.5);
 
-   float scanline = sin(gl_FragCoord.y * 0.02) * 0.01 + 0.99;
-   albedo.rgb *= scanline;
+		float scanline = sin(gl_FragCoord.y * 0.02) * 0.01 + 0.99;
+		albedo.rgb *= scanline;
 
-   #if ALPHA_BLEND == 0
-   albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
-   #endif
-}
-if (blockEntityId == 10109){
-	albedo.rgb = vec3(0.5,0.5,1.0);
-}
-
+		#if ALPHA_BLEND == 0
+		albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
+		#endif
+		}
+	if (blockEntityId == 10109){
+		albedo.rgb = vec3(0.5,0.5,1.0);
+	}
 
     /* DRAWBUFFERS:0 */
     gl_FragData[0] = albedo;

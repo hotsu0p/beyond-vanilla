@@ -147,9 +147,6 @@ vec3 WavingBlocks(vec3 position, float istopv) {
         wave.z += cos(worldpos.y * swingSpeed + frametime) * swingAmplitude * swingDirection;
     }
     #endif
-    if (mc_Entity.x == 10109 && istopv > 0.9) {
-   wave += CalcMove(worldpos, 0.35, 1.15, vec2(0.15, 0.06));
-    }
     position += wave;
 
     return position;

@@ -26,7 +26,7 @@ vec3 ApplyMultiColoredBlocklight(vec3 blocklightCol, vec3 screenPos) {
 
     coloredLightNormalized = normalize(coloredLight + 1e-6);
     coloredLightNormalized = mix(coloredLightNormalized * coloredLightNormalized, vec3(1.0), 0.1);
-    coloredLightNormalized *= GetLuminance(blocklightCol) * 1.2; // Adjust the multiplier here
+    coloredLightNormalized *= GetLuminance(blocklightCol) * .2; // Adjust the multiplier here
     coloredLightNormalized = mix(coloredLightNormalized, vec3(0.5, 0.6, 1.0), 0.5); // Introduce a colder tone
     coloredLightMix = min(dot(coloredLightNormalized, vec3(1.0)), 1.0);
 

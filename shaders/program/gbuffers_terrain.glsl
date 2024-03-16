@@ -458,7 +458,9 @@ float reflectionScale = 0.7;
 #ifdef TAA
 #include "/lib/util/jitter.glsl"
 #endif
-
+float hash(float n) {
+    return fract(sin(n) * 43758.5453123);
+}
 
 
 float emission = 10.0;
@@ -519,7 +521,6 @@ void main() {
 		mat = 5.0;
 	if (mc_Entity.x == 10201 || mc_Entity.x == 10205 || mc_Entity.x == 10206)
 		recolor = 1.0;		
-
 	if (mc_Entity.x == 10202)
 		lmCoord.x -= 0.0667;
 	
@@ -532,6 +533,23 @@ void main() {
 	if (mc_Entity.x == 10056) {
     color.rgb *= 1.5;
     emission = 1.0;
+	}
+
+
+	if (mc_Entity.x == 10289){
+		float randomFactor = hash(frameTimeCounter);
+
+		float pulse = sin(frameTimeCounter * .05 * 3.14159265358979 + randomFactor); 
+		pulse = (pulse + 1.0) * 0.5;
+
+		float smoothPulse = smoothstep(0.0, 1.0, pulse);
+
+		vec3 baseColor = vec3(1.0, 1.0, 1.0); 
+		vec3 lightColor = vec3(25.0/255.0, 134.0/255.0, 182.0/255.0);
+
+		vec3 finalColor = mix(baseColor, lightColor, smoothPulse * 0.3); 
+
+		color.rgb = finalColor;
 	}
 	if (mc_Entity.x == 10057){
 		color.rgb *= 1.22;
