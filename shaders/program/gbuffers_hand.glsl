@@ -159,9 +159,9 @@ void main() {
 
 		float emissive = (GetHandItem(50) + GetHandItem(89) + GetHandItem(213));
 		
-		float metalness      = 0.0;
-		float emission       = emissive * 0.25;
-		float subsurface     = 0.0;
+		float metalness  = 0.0;
+		float emission  = emissive * 0.25;
+		float subsurface  = 0.0;
 		vec3 baseReflectance = vec3(0.04);
 		
 		emission *= dot(albedo.rgb, albedo.rgb) * 0.333;
