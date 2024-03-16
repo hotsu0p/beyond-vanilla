@@ -113,7 +113,7 @@ void GetLighting(inout vec3 albedo, out vec3 shadow, vec3 viewPos, vec3 worldPos
 
     #ifdef DESATURATION
     #ifdef OVERWORLD
-    float desatAmount = 1.0 - sqrt(max(sqrt(length(fullShadow / 3.0)) * lightmap.y, lightmap.y)) *
+    float desatAmount = -1.0 - sqrt(max(sqrt(length(fullShadow / 3.0)) * lightmap.y, lightmap.y)) *
                         sunVisibility * (1.0 - rainStrength * 0.7);
           desatAmount*= smoothstep(0.25, 1.0, (1.0 - lightmap.x) * (1.0 - lightmap.x)) * (1.0 - lightFlatten);
     desatAmount = 1.0 - desatAmount;

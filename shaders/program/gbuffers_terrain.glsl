@@ -519,7 +519,6 @@ void main() {
 		mat = 5.0;
 	if (mc_Entity.x == 10201 || mc_Entity.x == 10205 || mc_Entity.x == 10206)
 		recolor = 1.0;		
-
 	if (mc_Entity.x == 10202)
 		lmCoord.x -= 0.0667;
 	
