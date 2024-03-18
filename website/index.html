@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<body>
+<h1 class="title"> Beyond Vinlla - Minecraft shader</h1>
+<div class="intro-containter">
+    <div>
+        <h2>Hello! </h2>
+        <p>Thanks for checking out my shader!</p>
+        <p>For other people who are wondering what this is you can check out the images below to get a taste of what its like</p>
+        <button onclick="showDiv()" class="image-button">Click to show images</button>
+    </div>
+</div>
+
+<div class="testdiv" style="display: none;" id="testdiv">
+  <img class="image" src="../assets/2024-03-02_17.41.42.png" alt="Why can you see this.... also coral1">
+  <img class="image" src="../assets/2024-03-04_15.26.03.png" alt="coral2">  
+  <img class="image" src="../assets/2024-03-04_15.26.26.png" alt="coral3">
+  <img class="image" src="../assets/2024-03-04_15.28.24.png" alt="coral4">
+</div>
+</body>
+<style>
+    body {
+    background: linear-gradient(to right, #1c1c1d, #182848);
+    font-family: 'Arial', sans-serif;
+    color: aliceblue;
+    
+  }
+  .intro-containter , .title{
+    text-align: center;
+  }
+  .image{
+    width: auto;
+    height: auto;
+    border-radius: 2%;
+  }
+  .image-button{
+    width: 150px;
+    height: 40px;
+    border-radius: 7%;
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+  }
+</style>
+<script>
+  function showDiv(){
+    var div = document.getElementById("testdiv")
+    div.style.display = "block"
+  }
+</script>
+ 
