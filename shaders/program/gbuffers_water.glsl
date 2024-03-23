@@ -677,13 +677,30 @@ float frametime = frameTimeCounter * ANIMATION_SPEED;
 
 //Common Functions//
 float WavingWater(vec3 worldPos) {
-	float fractY = fract(worldPos.y + cameraPosition.y + 0.005);
-		
-	float wave = sin(6.28 * (frametime * 0.7 + worldPos.x * 0.14 + worldPos.z * 0.07)) +
-				 sin(6.28 * (frametime * 0.5 + worldPos.x * 0.10 + worldPos.z * 0.20));
-	if (fractY > 0.01) return wave * 0.0125;
-	
-	return 0.0;
+    float fractY = fract(worldPos.y + cameraPosition.y + 0.005);
+    
+    float distance = distance(worldPos, cameraPosition);
+    float waveFrequency = mix(0.7, 0.5, distance / 10.0);
+    float waveAmplitude = mix(0.035, 0.02, distance / 10.0);
+    
+    // Adjust the wave frequency and amplitude based on distance to avoid glitches at far distances
+    waveFrequency *= 1.0 - smoothstep(0.0, 100.0, distance);
+    waveAmplitude *= 1.0 - smoothstep(0.0, 100.0, distance);
+    
+    float wave = sin(6.28 * (frametime * waveFrequency + worldPos.x * 0.14 + worldPos.z * 0.07)) +
+                 sin(6.28 * (frametime * waveFrequency + worldPos.x * 0.10 + worldPos.z * 0.20));
+    
+    // Clamp the wave amplitude to prevent extreme values
+    waveAmplitude = clamp(waveAmplitude, 0.0, 0.02);
+    
+    // Apply a smoothstep function to the wave to reduce the appearance of black lines
+    wave = smoothstep(-1.0, 1.0, wave);
+    
+    if (fractY > 0.01) {
+        return wave * waveAmplitude;
+    }
+    
+    return 0.0;
 }
 
 uniform sampler2D raindropTexture;
