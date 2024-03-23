@@ -106,9 +106,13 @@ vec3 WavingBlocks(vec3 position, float istopv) {
     #endif
 
     #ifdef WAVING_LEAF
-    if (mc_Entity.x == 10105)
-        wave += CalcMove(worldpos, 0.25, .80, vec2(0.04, 0.04));
-        
+ if (mc_Entity.x == 10105 && istopv > 0.9) {
+        float swingSpeed = 0.05;
+        float swingAmplitude = 0.01;
+        float swingDirection = 1.0;
+        wave.x += sin(worldpos.y * swingSpeed + frametime) * swingAmplitude * swingDirection;
+        wave.z += cos(worldpos.y * swingSpeed + frametime) * swingAmplitude * swingDirection;
+    }
     #endif
 
    #ifdef WAVING_VINE
