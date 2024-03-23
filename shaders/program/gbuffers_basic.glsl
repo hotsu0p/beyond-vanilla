@@ -139,7 +139,7 @@ void main() {
     float finalPosCBSA = worldPosCBSA + cameraPosCBSA;
     if (dot(worldPos - cameraPosition, cameraDirection) < 1.0) {
 
-        float timeOffset = frameTimeCounter * 0.5; 
+        float timeOffset = frameTimeCounter * 0.2; 
         float hue = fract(finalPosCBSA + timeOffset) * 6.5; 
         vec3 rainbowColor;
         if (hue < 1.0) {

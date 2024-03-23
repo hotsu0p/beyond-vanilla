@@ -1,7 +1,4 @@
-/* 
- Shaders v8 Series by Capt Tatsu 
-https://bitslablab.com 
-*/
+
 
 //Settings//
 #include "/lib/settings.glsl"
@@ -73,7 +70,6 @@ void main() {
     vec2 view = vec2(viewWidth, viewHeight) * 0.5;
 	newTexCoord = floor(newTexCoord * view) / view;
 	#endif
-
 	vec3 color = texture2DLod(colortex1, newTexCoord, 0).rgb;
 
 	#if CHROMATIC_ABERRATION > 0
