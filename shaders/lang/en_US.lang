@@ -834,6 +834,12 @@ option.GLINT_B=test
 option.WAVING_GRASS=Waving grass
 option.WAVING_GRASS.comment=§2[?]§r Allows the grass to wave.
 
+option.WAVING_BELL=Bells
+option.WAVING_BELL.comment=§2[?]§r Allows the bells to wave.
+
+option.WAVING_CHAIN=Chains
+option.WAVING_CHAIN.comment=§2[?]§r Allows chains to wave.
+
 option.WAVING_CROP=Crops
 option.WAVING_CROP.comment= §2[?]§r Allows plants on farmlands to wave.
 
