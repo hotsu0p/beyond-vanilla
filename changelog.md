@@ -1,3 +1,8 @@
+v2.7 - 3/24/24
+  - Improved stars
+  - Made sapplings move
+  - Updated hover
+  
 v2.5.1 - 3/16/24
   - Fixed overworld lighting
   - Improved skulk

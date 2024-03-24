@@ -77,7 +77,7 @@ void main() {
 
 	#ifdef END
    
-    albedo.rgb *= 0.02; // Apply fog factor to brightness
+    albedo.rgb *= 0.02; 
 
 
 	#ifdef SKY_DESATURATION

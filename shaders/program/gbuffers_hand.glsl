@@ -1,5 +1,3 @@
-
-
 //Settings//
 #include "/lib/settings.glsl"
 
@@ -157,7 +155,7 @@ void main() {
 		#endif
 		lightmap.x = max(lightmap.x, GetHandItem(213));
 
-		float emissive = (GetHandItem(50) + GetHandItem(89) + GetHandItem(213));
+		float emissive = (GetHandItem(50) + GetHandItem(89) + GetHandItem(213) + GetHandItem(92));
 		
 		float metalness  = 0.0;
 		float emission  = emissive * 0.25;
@@ -214,6 +212,7 @@ void main() {
 			albedo.rgb /= 0.7 * albedo.rgb + 0.7;
 		}
 		#endif
+		
 		
 		#ifdef MULTICOLORED_BLOCKLIGHT
 		lightAlbedo = albedo.rgb + 0.00001;

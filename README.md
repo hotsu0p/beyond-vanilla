@@ -1,18 +1,21 @@
 # Beyond Vanilla - Minecraft Shader Pack
 
-## Welcome to an immersive visual experience! This is my debut shader pack designed to enhance your Minecraft adventures.
+![Cover](https://cdn.modrinth.com/data/YIhUcKoq/images/298f3c919189cdcf641b89601d6866f3599ef2e4.png)
 
-### Installation Guide:
+Welcome to an immersive visual experience! Beyond Vanilla is a shader pack designed to take your Minecraft adventures to the next level.
 
 ## Links
 Modrinth: https://modrinth.com/shader/beyond-vanilla \
 forge: (Soon)\
 Github: https://github.com/hotsu0p/beyond-vanilla
 
+### Links:
+- Modrinth: [Download Here](https://modrinth.com/shader/beyond-vanilla)
+- Forge: (Coming Soon)
+- GitHub: [Project Repository](https://github.com/hotsu0p/beyond-vanilla)
 
-## Have an issue?
- open an issue here!
- https://github.com/hotsu0p/beyond-vanilla/issues
+### Have an issue or feature request?
+Open an issue [here](https://github.com/hotsu0p/beyond-vanilla/issues).
 
 1. **Download:**
    - Visit the green "Releases" tab and download the latest release.
@@ -29,12 +32,12 @@ Github: https://github.com/hotsu0p/beyond-vanilla
 
 ### Shader Features:
 
-- Explore a stunning visual upgrade with changes to lighting, shadows, and atmospheric effects.
-- Enjoy an immersive gaming experience with carefully crafted details.
+- Experience a stunning visual upgrade with enhancements to lighting, shadows, and atmospheric effects.
+- Immerse yourself in the game with carefully crafted details.
 
 ### Compatibility:
-- highly recomennd https://modrinth.com/resourcepack/embrace-pixels for better visuals
-- Tested on iris and sodium 1.1.6.
+
+- Tested on Iris and Sodium 1.1.6.
 - Optimized for mid to low-tier devices.
 - Not tested on Optifine.
 - Compatible with Nvidia GPUs (tested on a 4070 Ti).
@@ -42,16 +45,21 @@ Github: https://github.com/hotsu0p/beyond-vanilla
 
 ### Upcoming Enhancements:
 
-- [ ] More screenshots for a comprehensive preview.
-- [ ] Performance improvements for smoother gameplay.
-- [ ] Additional features to elevate your gaming experience.
-- [ ] Enhanced sky in the end.
-- [ ] Improved portal visuals.
-- [ ] Revamped GUI for a polished interface.
-- [ ] Sun and moon enhancements.
-- [✅] Uploading to Modrinth for wider availability.
+- [✅] More screenshots for a comprehensive preview.
+- [✅] Enhanced sky in the end.
+- [✅] Improved portal visuals.
+- [✅] Sun and moon enhancements.
+- [✅] Uploaded to Modrinth for wider availability.
+- [] Fix more bugs
+- [] Performance improvements for smoother gameplay.
+- [] Additional features to elevate your gaming experience.
+- [] Add a feature from the commuity..
+- [] Quality of life features
+- [] Glass blur
+- [] Revamped GUI for a polished interface.
+- [] Add more to the todo
 
 ### Credits:
-- **Hotsuop:** Made the base shader.
+- **Hotsuop:** Creator of the base shader.
 
-<small>If you contribute to the repo, your name could be featured here!</small>
+<small>If you contribute to the repository, your name could be featured here!</small>
