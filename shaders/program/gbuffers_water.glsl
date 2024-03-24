@@ -239,8 +239,8 @@ void main() {
 		emission *= dot(albedo.rgb, albedo.rgb) * 0.333;
 		
 		#ifndef REFLECTION_TRANSLUCENT
-		glass = 100;
-		translucent = 0.0;
+		glass = 1;
+		translucent = -10.0;
 		#endif
 
 		vec3 screenPos = vec3(gl_FragCoord.xy / vec2(viewWidth, viewHeight), gl_FragCoord.z);

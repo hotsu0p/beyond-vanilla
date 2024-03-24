@@ -158,6 +158,7 @@ void main() {
         albedo.rgb = rainbowColor;
     }
 #endif
+	
 	}
 
     /* DRAWBUFFERS:0 */
