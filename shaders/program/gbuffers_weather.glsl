@@ -30,10 +30,8 @@ uniform sampler2D depthtex0;
 //Common Variables//
 float eBS = eyeBrightnessSmooth.y / 240.0;
 float sunVisibility = clamp(dot(sunVec, upVec) + 0.05, 0.0, 0.1) * 10.0;
-// Uniforms//
-uniform float windStrength; // Add this line to declare the windStrength variable
+
 //Common Functions//
-uniform float time;
 void Defog(inout vec3 albedo) {
 	float z = texture2D(depthtex0,gl_FragCoord.xy/vec2(viewWidth,viewHeight)).r;
 	if (z == 1.0) return;
@@ -55,52 +53,39 @@ void Defog(inout vec3 albedo) {
 
 //Program//
 void main() {
-    #if defined NETHER || defined END
-    discard;
-    #endif
+	#if defined NETHER || defined END
+	discard;
+	#endif
 
     vec4 albedo = vec4(0.0);
-    
-    albedo.a = texture2D(texture, texCoord).a;
-    
-    if (albedo.a > 0.009) {
-        albedo.rgb = texture2D(texture, texCoord).rgb;
+	
+	albedo.a = texture2D(texture, texCoord).a;
+	
+	if (albedo.a > 0.001) {
+		albedo.rgb = texture2D(texture, texCoord).rgb;
 
-        // Modify the rain direction based on wind
-        vec2 windDirection = normalize(vec2(1.0, 0.5)); // Adjust the wind direction
-        vec2 rainDirection = normalize(vec2(1.0, 1.0)); // Original rain direction
-        vec2 finalRainDirection = normalize(rainDirection + windDirection * windStrength);
+		albedo.a *= 0.25 * rainStrength * length(albedo.rgb / 3.0) * float(albedo.a > 0.1);
+		albedo.rgb = sqrt(albedo.rgb);
+		albedo.rgb *= (ambientCol + lmCoord.x * lmCoord.x * blocklightCol) * WEATHER_OPACITY;
 
-        // Adjust the rain movement intensity based on wind strength
-        float windEffect = length(windDirection * windStrength);
+		#if MC_VERSION < 10800
+		albedo.a *= 4.0;
+		albedo.rgb *= 0.525;
+		#endif
+		
+		#if defined FOG && MC_VERSION < 11500
+		if (gl_FragCoord.z > 0.991) Defog(albedo.rgb);
+		#endif
 
-        // Calculate the rain movement
-        albedo.rgb = texture2D(texture, texCoord + finalRainDirection * windEffect * time).rgb;
-
-        albedo.a *= 0.25 * rainStrength * length(albedo.rgb / 3.0) * float(albedo.a > 0.1);
-        albedo.rgb = sqrt(albedo.rgb);
-        albedo.rgb *= (ambientCol + lmCoord.x * lmCoord.x * blocklightCol) * WEATHER_OPACITY;
-
-        #if MC_VERSION < 10800
-        albedo.a *= 4.0;
-        albedo.rgb *= 0.525;
-        #endif
-        
-        #if defined FOG && MC_VERSION < 11500
-        if (gl_FragCoord.z > 0.991) Defog(albedo.rgb);
-        #endif
-
-        #if ALPHA_BLEND == 0
-        albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
-        albedo.a *= 1.4;
-        #endif
-    }
-    
-    // Write the final color to the output buffer
-    gl_FragColor = albedo;
+		#if ALPHA_BLEND == 0
+		albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
+		albedo.a *= 1.4;
+		#endif
+	}
+	
+/* DRAWBUFFERS:0 */
+	gl_FragData[0] = albedo;
 }
-
-
 
 #endif
 

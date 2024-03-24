@@ -108,7 +108,8 @@ vec3 WavingBlocks(vec3 position, float istopv) {
     #ifdef WAVING_LEAF
     if (mc_Entity.x == 10105)
         wave += CalcMove(worldpos, 0.25, .80, vec2(0.04, 0.04));
-        
+    if (mc_Entity.x == 10465)
+        wave += CalcMove(worldpos, 0.25, 1.0, vec2(0.04, 0.04));
     #endif
 
    #ifdef WAVING_VINE

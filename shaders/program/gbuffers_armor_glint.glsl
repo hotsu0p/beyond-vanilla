@@ -22,7 +22,7 @@ void main() {
     vec4 albedo = texture2D(texture, texCoord) * color;
 
 
-    float glintIntensity = .35; 
+    float glintIntensity = .00000035; 
     vec3 glintEffect = vec3(glintIntensity);
 
     albedo.rgb += glintEffect * albedo.rgb;
