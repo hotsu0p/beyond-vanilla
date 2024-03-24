@@ -9,25 +9,25 @@ profile.ULTRA=§eUltra
 profile.comment=§cMinimum: no shadows, no extra effects. §4Low : Low shadows, no extra effects, Good for low to mid teir computers. §aMedium : low-medium shadows, no extra effects, For mid to high teir computers. §3High : Medium shadows, AO and light shafts, Higher performance than Ultra but still good visuals. §eUltra : high shadows, AO, and light shafts.
 
 #Screens
-screen.LIGHTING=§3Lighting
+screen.LIGHTING=Lighting
 screen.SHADOW_CONFIG=More Shadow Config
 screen.MCBL=Colored Blocklight Config
 
-screen.MATERIAL=§6Material
+screen.MATERIAL=§9Material
 screen.SPECULAR=Specular & Reflections
 screen.NORMALS=Normals & Parallax
 
-screen.ATMOSPHERICS=§3Atmospherics
+screen.ATMOSPHERICS=Atmospherics
 screen.SKY=Sky Config
 screen.CLOUDS=Cloud Config
 
-screen.WATER=§6Water
+screen.WATER=Water
 
-screen.CAMERA=§3Camera
+screen.CAMERA=§9Camera
 
-screen.ANTIALIASING=§6Anti-aliasing
+screen.ANTIALIASING=Anti-aliasing
 scree.ANTIALIASING.comment=test
-screen.COLOR=§3Color
+screen.COLOR=Color
 screen.END_COLOR=Test
 screen.LIGHT_COLOR=Lighting Color
 screen.LIGHT_M=Light (Morning) 
@@ -66,7 +66,7 @@ option.ARNIYRE_R=Red
 option.ARNIYRE_G=Green
 option.ARNIYRE_B=Blue
 option.ARNIYRE_I=Intensity
-screen.CGT=§6Color Grading & Tonemap
+screen.CGT=§9Color Grading & Tonemap
 screen.EXPOSURE_CONFIG=More Exposure Config
 screen.COLOR_GRADING_CONFIG=Color Grading Config
 screen.CG_R=Red Channel
@@ -77,7 +77,7 @@ screen.CG_T=Tint
 screen.EXTRAS=§1E§2x§ct§6r§fa
 
 
-screen.ANIMATION=§3Animations
+screen.ANIMATION=Animations
 
 #Settings
 option.ABOUT=§3Beyond Vanilla v1.0.1
