@@ -19,15 +19,12 @@ varying vec4 color;
 
 //Uniforms//
 uniform int blockEntityId;
-
 uniform sampler2D tex;
-
 #ifdef WATER_CAUSTICS
 uniform int worldTime;
-
 uniform float frameTimeCounter;
-
 uniform sampler2D noisetex;
+uniform vec3 cameraPosition; // Add this line
 #endif
 
 //Common Variables//
@@ -69,91 +66,99 @@ float GetWaterHeightMap(vec3 worldPos, vec2 offset) {
 #endif
 
 //Program//
+//Program//
+//Program//
+//Program//
 void main() {
     #if MC_VERSION >= 11300
-	if (blockEntityId == 10205) discard;
-	#endif
+    if (blockEntityId == 10205) discard;
+    #endif
 
     vec4 albedo = texture2D(tex, texCoord.xy);
-	albedo.rgb *= color.rgb;
+    albedo.rgb *= color.rgb;
 
     float premult = float(mat > 0.98 && mat < 1.02);
-	float water = float(mat > 1.98 && mat < 2.02);
-	float disable = float(mat > 2.98 && mat < 3.02);
-	if (albedo.a < 0.01 || disable > 0.5) discard;
+    float water = float(mat > 1.98 && mat < 2.02);
+    float disable = float(mat > 2.98 && mat < 3.02);
+    if (albedo.a < 0.01 || disable > 0.5) discard;
 
-	if (water > 0.5) {
-		#if !defined WATER_SHADOW_COLOR && !defined WATER_CAUSTICS
-			discard;
-		#else
-			#ifdef WATER_SHADOW_COLOR
-				#if WATER_MODE == 0
-					albedo.rgb = pow(waterColor.rgb / waterColor.a, vec3(0.25));
-				#elif WATER_MODE == 1
-					albedo.rgb = sqrt(albedo.rgb);
-				#elif WATER_MODE == 2
-					float waterLuma = length(albedo.rgb * albedo.rgb / pow(color.rgb, vec3(2.2))) * 2.0;
-					albedo.rgb = sqrt(waterLuma * sqrt(waterColor.rgb / waterColor.a));
-				#elif WATER_MODE == 3
-					albedo.rgb = sqrt(color.rgb * 0.59);
-				#endif
+    if (water > 0.5) {
+        #if !defined WATER_SHADOW_COLOR && !defined WATER_CAUSTICS
+            discard;
+        #else
+            #ifdef WATER_SHADOW_COLOR
+                #if WATER_MODE == 0
+                    albedo.rgb = pow(waterColor.rgb / waterColor.a, vec3(0.25));
+                #elif WATER_MODE == 1
+                    albedo.rgb = sqrt(albedo.rgb);
+                #elif WATER_MODE == 2
+                    float waterLuma = length(albedo.rgb * albedo.rgb / pow(color.rgb, vec3(2.2))) * 2.0;
+                    albedo.rgb = sqrt(waterLuma * sqrt(waterColor.rgb / waterColor.a));
+                #elif WATER_MODE == 3
+                    albedo.rgb = sqrt(color.rgb * 0.59);
+                #endif
 
-				#if WATER_ALPHA_MODE == 0
-				albedo.a = waterAlpha;
-				#endif
-			#else
-				albedo.rgb = vec3(1.0);
-			#endif
-		
-			#ifdef WATER_CAUSTICS
-				float normalOffset = WATER_SHARPNESS + 0.2;
-				
-				float normalStrength = 0.35;
+                #if WATER_ALPHA_MODE == 0
+                    albedo.a = waterAlpha;
+                #endif
+            #else
+                albedo.rgb = vec3(1.0);
+            #endif
 
-				float h0 = GetWaterHeightMap(worldPos, vec2(0.0));
-				float h1 = GetWaterHeightMap(worldPos, vec2( normalOffset, 0.0));
-				float h2 = GetWaterHeightMap(worldPos, vec2(-normalOffset, 0.0));
-				float h3 = GetWaterHeightMap(worldPos, vec2(0.0,  normalOffset));
-				float h4 = GetWaterHeightMap(worldPos, vec2(0.0, -normalOffset));
+            #ifdef WATER_CAUSTICS
+                // Smooth the caustics effect to prevent flashing
+                float normalOffset = WATER_SHARPNESS + 0.2;
+                float normalStrength = 0.35;
 
-				float xDeltaA = (h1 - h0) / normalOffset;
-				float xDeltaB = (h2 - h0) / normalOffset;
-				float yDeltaA = (h3 - h0) / normalOffset;
-				float yDeltaB = (h4 - h0) / normalOffset;
+                float h0 = GetWaterHeightMap(worldPos, vec2(0.0));
+                float h1 = GetWaterHeightMap(worldPos, vec2( normalOffset, 0.0));
+                float h2 = GetWaterHeightMap(worldPos, vec2(-normalOffset, 0.0));
+                float h3 = GetWaterHeightMap(worldPos, vec2(0.0, normalOffset));
+                float h4 = GetWaterHeightMap(worldPos, vec2(0.0, -normalOffset));
 
-				float height = max((xDeltaA * -xDeltaB + yDeltaA * -yDeltaB), 0.0);
+                float xDeltaA = (h1 - h0) / normalOffset;
+                float xDeltaB = (h2 - h0) / normalOffset;
+                float yDeltaA = (h3 - h0) / normalOffset;
+                float yDeltaB = (h4 - h0) / normalOffset;
 
-				#if WATER_NORMALS == 1
-				height *= 48.0;
-				#elif WATER_NORMALS == 2
-				height *= 24.0;
-				#endif
+                float height = max((xDeltaA * -xDeltaB + yDeltaA * -yDeltaB), 0.0);
 
-				#ifdef WATER_SHADOW_COLOR
-					height /= length(albedo.rgb);
-				#endif
+                #if WATER_NORMALS == 1
+                    height *= 48.0;
+                #elif WATER_NORMALS == 2
+                    height *= 24.0;
+                #endif
 
-				height /= sqrt(height * height / 9.0 + 1.0);
+                #ifdef WATER_SHADOW_COLOR
+                    height /= length(albedo.rgb);
+                #endif
 
-				albedo.rgb *= 1.0 + height;
-			#endif
-		#endif
-	}
+                height /= sqrt(height * height / 9.0 + 1.0);
+
+                // Apply a smoothing function to the height to prevent flashing
+                height = smoothstep(0.0, 1.0, height);
+
+                albedo.rgb *= 1.0 + height;
+            #endif
+        #endif
+    }
 
     #ifdef SHADOW_COLOR
-	albedo.rgb = mix(vec3(1.0), albedo.rgb, 1.0 - pow(1.0 - albedo.a, 1.5));
-	albedo.rgb *= 1.0 - pow(albedo.a, 96.0);
-	#else
-	if ((premult > 0.5 && albedo.a < 0.98)) albedo.a = 0.0;
-	#endif
+        albedo.rgb = mix(vec3(1.0), albedo.rgb, 1.0 - pow(1.0 - albedo.a, 1.5));
+        albedo.rgb *= 1.0 - pow(albedo.a, 96.0);
+    #else
+        if ((premult > 0.5 && albedo.a < 0.98)) albedo.a = 0.0;
+    #endif
 
-	#ifdef WATER_CAUSTICS
-	albedo.rgb *= 0.25;
-	#endif
+    #ifdef WATER_CAUSTICS
+        albedo.rgb *= 0.25;
+    #endif
 
-	gl_FragData[0] = albedo;
+    // Ensure that the albedo is not too dark during the day
+    albedo.rgb = max(albedo.rgb, vec3(0.1));
+
+    gl_FragData[0] = albedo;
 }
-
 #endif
 
 //Vertex Shader/////////////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@
 Welcome to an immersive visual experience! Beyond Vanilla is a shader pack designed to take your Minecraft adventures to the next level.
 
 ## Links
-Modrinth: https://modrinth.com/shader/beyond-vanilla\
+Modrinth: https://modrinth.com/shader/beyond-vanilla \
 forge: (Soon)\
 Github: https://github.com/hotsu0p/beyond-vanilla
 
