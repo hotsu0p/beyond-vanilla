@@ -73,15 +73,14 @@ void UnderwaterDistort(inout vec2 texCoord) {
 	vec2 originalTexCoord = texCoord;
 
 	texCoord += vec2(
-		cos(texCoord.y * 32.0 + frameTimeCounter * 3.0),
-		sin(texCoord.x * 32.0 + frameTimeCounter * 1.7)
-	) * 0.0005;
+		cos(texCoord.y * 32.0 + frameTimeCounter * 3.0) * .001,
+		sin(texCoord.x * 32.0 + frameTimeCounter * 1.5) * .002 
+	);
 
 	float mask = float(
 		texCoord.x > 0.0 && texCoord.x < 1.0 &&
 	    texCoord.y > 0.0 && texCoord.y < 1.0
-	)
-	;
+	);
 	if (mask < 0.5) texCoord = originalTexCoord;
 }
 

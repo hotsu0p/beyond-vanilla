@@ -128,7 +128,7 @@ vec3 GetParallaxWaves(vec3 worldPos, vec3 viewVector) {
 	vec3 parallaxPos = worldPos;
 	
 	for(int i = 0; i < 4; i++) {
-		float height = -1.25 * GetWaterHeightMap(parallaxPos, vec2(0.0)) + 0.25;
+		float height = -1.25 * GetWaterHeightMap(parallaxPos, vec2(0.0)) + 3;
 		parallaxPos.xz += height * viewVector.xy / dist;
 	}
 	return parallaxPos;
@@ -210,7 +210,6 @@ void main() {
 	float surfaceDepth = 1.0;
 	float parallaxFade = clamp((dist - PARALLAX_DISTANCE) / 32.0, 0.0, 1.0);
 	float skipAdvMat = float(mat > 0.98 && mat < 1.02);
-	
 	#ifdef PARALLAX
 	if(skipAdvMat < 0.5) {
 		newCoord = GetParallaxCoord(texCoord, parallaxFade, surfaceDepth);
@@ -423,8 +422,9 @@ void main() {
 			vec3 skyReflection = vec3(0.0);
 			float reflectionMask = 0.0;
 	
-			fresnel = fresnel * 0.98 + 0.02;
-			fresnel*= max(1.0 - isEyeInWater * 0.5 * water, 0.5);
+			fresnel = fresnel * 0.99 + 0.02;
+			
+			fresnel*= max(1.0 - isEyeInWater * 5 * water, 0.5);
 			// fresnel = 1.0;
 			
 			#if REFLECTION == 2
@@ -683,7 +683,6 @@ float WavingWater(vec3 worldPos) {
     float waveFrequency = mix(0.7, 0.5, distance / 10.0);
     float waveAmplitude = mix(0.035, 0.02, distance / 10.0);
     
-    // Adjust the wave frequency and amplitude based on distance to avoid glitches at far distances
     waveFrequency *= 1.0 - smoothstep(0.0, 100.0, distance);
     waveAmplitude *= 1.0 - smoothstep(0.0, 100.0, distance);
     
@@ -787,3 +786,4 @@ void main() {
 }
 
 #endif
+
