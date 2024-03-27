@@ -152,6 +152,20 @@ vec3 hue2(vec3 color, float hue) {
     vec3 p = abs(fract(hsv.xxx + K.xyz) * 6.0 - K.www);
     return hsv.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), hsv.y);
 }
+void Distort(inout vec2 texCoord) {
+	vec2 originalTexCoord = texCoord;
+
+	texCoord += vec2(
+		cos(texCoord.y * 32.0 + frameTimeCounter * 3.0) * .001,
+		sin(texCoord.x * 32.0 + frameTimeCounter * 1.5) * .002 
+	);
+
+	float mask = float(
+		texCoord.x > 0.0 && texCoord.x < 1.0 &&
+	    texCoord.y > 0.0 && texCoord.y < 1.0
+	);
+	if (mask < 0.5) texCoord = originalTexCoord;
+}
 float random(vec2 st){
     return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
 }

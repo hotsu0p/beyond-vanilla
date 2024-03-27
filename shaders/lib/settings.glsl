@@ -112,7 +112,7 @@ Please don't edit anything from Undefine section and onwards.
   #define SKY_GROUND 2 //[0 1 2]
   #define SKYBOX_BRIGHTNESS 2.50 //[0.25 0.50 0.75 1.00 1.25 1.50 1.75 2.00 2.25 2.50 2.75 3.00 3.25 3.50 3.75 4.00]
 
-  #define CLOUD_BASE 0 //[0 1]
+  #define CLOUD_BASE 0 //[0 1 2]
   #define CLOUD_DENSITY 4 //[1 2 4 6 8]
   #define CLOUD_AMOUNT 11.0 //[12.0 11.0 10.0 9.0 8.0]
   #define CLOUD_HEIGHT 10.0 //[5.0 7.5 10.0 12.5 15.0]

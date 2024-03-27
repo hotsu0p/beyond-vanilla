@@ -112,6 +112,7 @@ void main() {
 
                 float h0 = GetWaterHeightMap(worldPos, vec2(0.0));
                 float h1 = GetWaterHeightMap(worldPos, vec2( normalOffset, 0.0));
+                
                 float h2 = GetWaterHeightMap(worldPos, vec2(-normalOffset, 0.0));
                 float h3 = GetWaterHeightMap(worldPos, vec2(0.0, normalOffset));
                 float h4 = GetWaterHeightMap(worldPos, vec2(0.0, -normalOffset));

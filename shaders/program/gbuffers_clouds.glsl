@@ -78,7 +78,9 @@ void main() {
 	#if ALPHA_BLEND == 0
 	albedo.rgb = sqrt(max(albedo.rgb, vec3(0.0)));
 	#endif
+	if(isEyeInWater == 0.0){
 	
+	}
     /* DRAWBUFFERS:0 */
 	gl_FragData[0] = albedo;
 

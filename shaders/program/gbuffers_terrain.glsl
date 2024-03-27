@@ -535,7 +535,6 @@ void main() {
     emission = 1.0;
 	}
 
-
 	if (mc_Entity.x == 10289){
 		float randomFactor = hash(frameTimeCounter);
 

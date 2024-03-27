@@ -4,6 +4,64 @@ float CloudSampleBase(vec2 coord, vec2 wind, float cloudGradient, float sunCover
 
 	#if CLOUD_BASE == 0
 	float noiseBase = texture2D(noisetex, coord * 0.25 + wind).r;
+	noiseBase = pow(1.0 - noiseBase, 2.0) * 0.5 + 0.25;
+
+	float layerNoise = texture2D(noisetex, coord * 0.5 + wind).g;
+	layerNoise = pow(1.0 - layerNoise, 2.0) * 0.5 + 0.25;
+
+	noiseBase = mix(noiseBase, layerNoise, 0.5);
+
+	noiseBase = noiseBase * 0.8 + 0.2;
+	noiseBase = clamp(noiseBase, 0.0, 1.0);
+
+	vec3 cloudColor = vec3(0.9, 0.9, 0.9) * noiseBase;
+	cloudColor += vec3(0.1, 0.1, 0.1) * (1.0 - noiseBase);
+
+	float blurAmount = 0.02; 
+	vec2 blurCoord = coord + wind * blurAmount;
+	float blurNoise = texture2D(noisetex, blurCoord).r;
+	cloudColor = mix(cloudColor, vec3(0.9, 0.9, 0.9) * blurNoise, 0.3);
+
+	cloudColor = clamp(cloudColor, 0.0, 1.0);
+
+	cloudColor *= 0.8;
+	cloudColor += vec3(0.1, 0.1, 0.1);
+#if CLOUD_BASE == 2
+    // Base density and color of the clouds
+    float baseDensity = texture2D(noisetex, coord * 0.1 + wind * 0.05).a;
+    baseDensity = pow(baseDensity, 3.0) * 0.7 + 0.3;
+    vec3 baseColor = mix(vec3(0.8, 0.8, 0.9), vec3(0.6, 0.6, 0.7), baseDensity);
+
+    // Detail texture for additional variation
+    float detailDensity = texture2D(noisetex, coord * 1.5 + wind * 0.5).b;
+    detailDensity = pow(detailDensity, 2.0) * 0.3 + 0.7;
+
+    // Mixing base and detail densities
+    float cloudDensity = mix(baseDensity, detailDensity, 0.6);
+
+    // Final cloud color based on density
+    vec3 cloudColor = mix(baseColor, vec3(0.8, 0.8, 0.9), cloudDensity);
+
+    // Adding variation using noise for a more realistic look
+    float noiseAmount = 0.04; 
+    vec2 noiseCoord = coord + wind * noiseAmount;
+    float noiseValue = texture2D(noisetex, noiseCoord).a;
+    cloudColor = mix(cloudColor, vec3(0.8, 0.8, 0.9), noiseValue * 0.2);
+
+    // Clamp color values to ensure they're within valid range
+    cloudColor = clamp(cloudColor, 0.0, 1.0);
+
+    // Adjusting overall brightness and contrast
+    cloudColor *= 0.9;
+    cloudColor += vec3(0.1, 0.1, 0.1);
+
+    // Mixing cloud color with existing color
+    cloudColor = mix(cloudColor, existingColor, 0.5); // Assuming existingColor is already defined
+
+    // Assigning the final cloud color
+    finalColor = cloudColor;
+#endif
+
 	#else
 	float noiseBase = texture2D(noisetex, coord * 0.5 + wind).g;
 	noiseBase = pow(1.0 - noiseBase, 2.0) * 0.5 + 0.25;

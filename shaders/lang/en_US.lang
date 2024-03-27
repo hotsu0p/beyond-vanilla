@@ -359,8 +359,9 @@ option.SKYBOX_BRIGHTNESS.comment=Adjusts skybox brightness. §e[*]§rSet to 1.00
 #Cloud Config
 option.CLOUD_BASE=Base Shape
 option.CLOUD_BASE.comment=Determines which noise type used for the cloud's base shape.
-value.CLOUD_BASE.0=Perlin
+value.CLOUD_BASE.0=Altostratus
 value.CLOUD_BASE.1=Worley
+value.CLOUD_BASE.2=Stratocumulus
 
 option.CLOUD_DENSITY=Density
 option.CLOUD_DENSITY.comment=Adjusts cloud density, higher density makes artifacts more visible.
