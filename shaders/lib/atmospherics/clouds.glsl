@@ -2,57 +2,81 @@
 float CloudSampleBase(vec2 coord, vec2 wind, float cloudGradient, float sunCoverage, float dither, float multiplier) {
 	coord.xy *= 0.004;
 
-	#if CLOUD_BASE == 0
-	float noiseBase = texture2D(noisetex, coord * 0.25 + wind).r;
-	noiseBase = pow(1.0 - noiseBase, 2.0) * 0.5 + 0.25;
+		#if CLOUD_BASE == 0
+				float noiseBase = texture2D(noisetex, coord * 0.25 + wind).r;
+				noiseBase = pow(1.0 - noiseBase, 2.0) * 0.5 + 0.25;
 
-	float layerNoise = texture2D(noisetex, coord * 0.5 + wind).g;
-	layerNoise = pow(1.0 - layerNoise, 2.0) * 0.5 + 0.25;
+				float layerNoise = texture2D(noisetex, coord * 0.5 + wind).g;
+				layerNoise = pow(1.0 - layerNoise, 2.0) * 0.5 + 0.25;
 
-	noiseBase = mix(noiseBase, layerNoise, 0.5);
+				noiseBase = mix(noiseBase, layerNoise, 0.5);
 
-	noiseBase = noiseBase * 0.8 + 0.2;
-	noiseBase = clamp(noiseBase, 0.0, 1.0);
+				noiseBase = noiseBase * 0.8 + 0.2;
+				noiseBase = clamp(noiseBase, 0.0, 1.0);
 
-	vec3 cloudColor = vec3(0.9, 0.9, 0.9) * noiseBase;
-	cloudColor += vec3(0.1, 0.1, 0.1) * (1.0 - noiseBase);
+				vec3 cloudColor = vec3(0.9, 0.9, 0.9) * noiseBase;
+				cloudColor += vec3(0.1, 0.1, 0.1) * (1.0 - noiseBase);
 
-	float blurAmount = 0.02; 
-	vec2 blurCoord = coord + wind * blurAmount;
-	float blurNoise = texture2D(noisetex, blurCoord).r;
-	cloudColor = mix(cloudColor, vec3(0.9, 0.9, 0.9) * blurNoise, 0.3);
+				float blurAmount = 0.02; 
+				vec2 blurCoord = coord + wind * blurAmount;
+				float blurNoise = texture2D(noisetex, blurCoord).r;
+				cloudColor = mix(cloudColor, vec3(0.9, 0.9, 0.9) * blurNoise, 0.3);
 
-	cloudColor = clamp(cloudColor, 0.0, 1.0);
+				cloudColor = clamp(cloudColor, 0.0, 1.0);
 
-	cloudColor *= 0.8;
-	cloudColor += vec3(0.1, 0.1, 0.1);
+				cloudColor *= 0.8;
+				cloudColor += vec3(0.1, 0.1, 0.1);
 
-	#if CLOUD_BASE == 2
-		float baseDensity = texture2D(noisetex, coord * 0.1 + wind * 0.05).a;
-		baseDensity = pow(baseDensity, 3.0) * 0.6 + 0.4;
-		vec3 baseColor = mix(vec3(0.8, 0.8, 0.9), vec3(0.6, 0.6, 0.7), baseDensity);
+		#if CLOUD_BASE == 2
+				float baseDensity = texture2D(noisetex, coord * 0.1 + wind * 0.05).a;
+				baseDensity = pow(baseDensity, 3.0) * 0.6 + 0.4;
+				vec3 baseColor = mix(vec3(0.8, 0.8, 0.9), vec3(0.6, 0.6, 0.7), baseDensity);
 
-		float detailDensity = texture2D(noisetex, coord * 0.5 + wind * 0.1).b;
-		detailDensity = pow(detailDensity, 3.0) * 0.3 + 0.7;
-		float cloudDensity = mix(baseDensity, detailDensity, 0.4);
+				float detailDensity = texture2D(noisetex, coord * 0.5 + wind * 0.1).b;
+				detailDensity = pow(detailDensity, 3.0) * 0.3 + 0.7;
+				float cloudDensity = mix(baseDensity, detailDensity, 0.4);
 
-		vec3 cloudColor = mix(baseColor, vec3(0.8, 0.8, 0.9), cloudDensity);
+				vec3 cloudColor = mix(baseColor, vec3(0.8, 0.8, 0.9), cloudDensity);
 
-		float noiseAmount = 0.05; 
-		vec2 noiseCoord = coord * 0.0000000005 + wind * 0.000000000025; 
-		float noiseValue = texture2D(noisetex, noiseCoord).a;
-		cloudColor = mix(cloudColor, vec3(0.8, 0.8, 0.9), noiseValue * 0.2);
+				float noiseAmount = 0.05; 
+				vec2 noiseCoord = coord * 0.0000000005 + wind * 0.000000000025; 
+				float noiseValue = texture2D(noisetex, noiseCoord).a;
+				cloudColor = mix(cloudColor, vec3(0.8, 0.8, 0.9), noiseValue * 0.2);
 
-		cloudColor = clamp(cloudColor, 0.0, 1.0);
+				cloudColor = clamp(cloudColor, 0.0, 1.0);
 
-		cloudColor *= 0.9;
-		cloudColor += vec3(0.05, 0.05, 0.05);
+				cloudColor *= 0.9;
+				cloudColor += vec3(0.05, 0.05, 0.05);
 
-		cloudColor = mix(cloudColor, existingColor, 0.6);
-		finalColor = cloudColor;
-	#endif
+				cloudColor = mix(cloudColor, existingColor, 0.6);
+				finalColor = cloudColor;
+		#endif
+		#if CLOUD_BASE == 7
+				float baseDensity = texture2D(noisetex, coord * 0.1 + wind * 0.05).a;
+				baseDensity = pow(baseDensity, 5.0) * 0.05 + 0.95; 
+				vec3 baseColor = mix(vec3(0.95, 0.95, 0.98), vec3(0.9, 0.9, 0.95), baseDensity);
 
 
+				float detailDensity = texture2D(noisetex, coord * 0.5 + wind * 0.1).b;
+				detailDensity = pow(detailDensity, 3.0) * 0.1 + 0.9; 
+				float cloudDensity = mix(baseDensity, detailDensity, 0.4);
+
+				vec3 cloudColor = mix(baseColor, vec3(0.95, 0.95, 0.98), cloudDensity); 
+
+				float noiseAmount = 0.05; 
+				vec2 noiseCoord = coord * 0.0000000005 + wind * 0.000000000025; 
+				float noiseValue = texture2D(noisetex, noiseCoord).a;
+				
+				cloudColor = mix(cloudColor, vec3(0.95, 0.95, 0.98), noiseValue * 0.2);
+
+				cloudColor = clamp(cloudColor, 0.0, 1.0);
+
+				cloudColor *= 0.9;
+				cloudColor += vec3(0.05, 0.05, 0.05);
+				cloudColor = mix(cloudColor, existingColor, 0.6); 
+				
+				finalColor = cloudColor;
+		#endif
 
 
 
@@ -74,6 +98,14 @@ float CloudSampleBase(vec2 coord, vec2 wind, float cloudGradient, float sunCover
 	noise = mix(noise, 21.0, 0.33 * rainStrength);
 		
 	noise = max(noise - (sunCoverage * 3.0 + CLOUD_AMOUNT), 0.0);
+
+		#if CLOUD_BASE == 7
+		noise *= CLOUD_DENSITY / 1.5 * multiplier;
+		
+		#endif
+		#if CLOUD_BASE == 15
+		noise *= .0 * multiplier;
+		#endif
 	noise *= CLOUD_DENSITY * multiplier;
 	noise *= (1.0 - 0.75 * rainStrength);
 	noise = noise / sqrt(noise * noise + 0.5);

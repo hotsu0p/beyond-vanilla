@@ -362,6 +362,8 @@ option.CLOUD_BASE.comment=Determines which noise type used for the cloud's base 
 value.CLOUD_BASE.0=Altostratus
 value.CLOUD_BASE.1=Worley
 value.CLOUD_BASE.2=Stratocumulus
+vaule.CLOUD_BASE.7=Cirrus
+vaule.CLOUD_BASE.15=Off
 
 option.CLOUD_DENSITY=Density
 option.CLOUD_DENSITY.comment=Adjusts cloud density, higher density makes artifacts more visible.
