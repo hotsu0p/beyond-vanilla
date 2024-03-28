@@ -128,7 +128,7 @@ vec3 GetLightShafts(float pixeldepth0, float pixeldepth1, vec3 color, float dith
 				float n3da = texture2D(noisetex, npos.xz / 512.0 + floor(npos.y / 3.0) * 0.35).r;
 				float n3db = texture2D(noisetex, npos.xz / 512.0 + floor(npos.y / 3.0 + 1.0) * 0.35).r;
 				float noise = mix(n3da, n3db, fract(npos.y / 3.0));
-				noise = sin(noise * 28.0 + frametime * 4.0) * 0.25 + 0.5;
+				noise = sin(noise * 280 + frametime * 4.0) * .0025 + 0.5;
 				shadow *= noise;
 				#endif
 				

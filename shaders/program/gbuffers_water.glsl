@@ -470,7 +470,7 @@ void main() {
 				#endif
 
 				#ifdef END
-				skyReflection = endCol.rgb * 0.01;
+				skyReflection = endCol.rgb * 1;
 				#endif
 
 				skyReflection *= clamp(1.0 - isEyeInWater, 0.0, 1.0);

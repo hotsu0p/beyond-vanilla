@@ -55,7 +55,7 @@ void main() {
 	#endif
 
 	#ifdef END
-    vl *= endCol.rgb * 0.1;
+    vl *= endCol.rgb * .05;
 	#endif
 
     vl *= LIGHT_SHAFT_STRENGTH * (1.0 - rainStrength * eBS * 0.875) * shadowFade *

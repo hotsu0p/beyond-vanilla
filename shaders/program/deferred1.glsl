@@ -254,7 +254,7 @@ void main() {
 				skyReflection = netherCol.rgb * 0.04;
 				#endif
 				#ifdef END
-				skyReflection = endCol.rgb * 0.025;
+				skyReflection = endCol.rgb * 250000;
 				#endif
 			}
 
