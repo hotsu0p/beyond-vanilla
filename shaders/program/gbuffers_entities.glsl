@@ -160,9 +160,17 @@ void main() {
 		float pulse = .15 * (1.0 + sin(frameTimeCounter * 1 * 3.14159265358979));
 		albedo.rgb = mix(albedo.rgb, vec3(0.0,0.0,0.0), pulse);
 	}
+	#ifdef GLOW_XP
 	if (entityId == 10103){
-		albedo.rgb *= 10;
+		float pulse = abs(sin(frameTimeCounter * 0.4)); // Smooth pulsing effect that loops
+	vec3 xpColor = vec3(
+		abs(sin(frameTimeCounter * 2.0 + texCoord.x * 3)), // Looping horizontal color scroll effect
+		abs(sin(frameTimeCounter * 2.0 + texCoord.x * 3 + 2)),
+		abs(sin(frameTimeCounter * 2.0 + texCoord.x * 3 + 4))
+	);
+	albedo.rgb = mix(albedo.rgb, xpColor, pulse);
 	}
+	#endif
 	float lightningBolt = float(entityId == 10101);
 
 	if(lightningBolt > 0.5) {

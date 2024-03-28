@@ -814,6 +814,10 @@ value.OUTLINE.1=Black
 value.OUTLINE.2=Colored
 value.OUTLINE.3=1.12 Update Art
 value.OUTLINE.4=Dungeons
+option.HIGHLIGHT=Highlight
+option.HIGHLIGHT.comment= §e[?]§  Highlights blocks when hovered!
+option.GLOW_XP= Glow XP
+option.GLOW_XP.comment= §e[?]§  Makes xp orbs glow rainbow
 option.TOON_LIGHTMAP=Toon Lightmap
 option.TOON_LIGHTMAP.comment=Reduces the quality of vanilla lighting for cel shading. §e[*]§rThis option is known for making the game "look bad", only enable this when needed.
 
