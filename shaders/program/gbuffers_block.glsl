@@ -1,5 +1,3 @@
-
-
 //Settings//
 #include "/lib/settings.glsl"
 
@@ -127,7 +125,6 @@ vec4 clamp01(vec4 value) {
 uniform sampler2D colortex0;
 uniform sampler2D depthtex1;
 vec3 hue2(vec3 color, float hue) {
-    // Convert the color to HSV
     float maxChannel = max(max(color.r, color.g), color.b);
     float minChannel = min(min(color.r, color.g), color.b);
     float delta = maxChannel - minChannel;
@@ -144,10 +141,7 @@ vec3 hue2(vec3 color, float hue) {
         hsv.x = fract(hsv.x);
     }
 
-    // Adjust the hue
     hsv.x = fract(hsv.x + hue / 360.0);
-
-    // Convert back to RGB
     vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
     vec3 p = abs(fract(hsv.xxx + K.xyz) * 6.0 - K.www);
     return hsv.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), hsv.y);
@@ -255,8 +249,9 @@ void main() {
 							  tangent.y, binormal.y, normal.y,
 							  tangent.z, binormal.z, normal.z);
 
+		
 		if ((normalMap.x > -0.999 || normalMap.y > -0.999) && viewVector == viewVector)
-			newNormal = clamp(normalize(normalMap * tbnMatrix), vec3(-1.0), vec3(1.0));
+		newNormal = clamp(normalize(normalMap * tbnMatrix), vec3(-1.0), vec3(1.0));
 		#endif
 		
 		#ifdef DYNAMIC_HANDLIGHT
@@ -330,7 +325,7 @@ void main() {
 
 		#ifdef ADVANCED_MATERIALS
 		skyOcclusion = lightmap.y;
-
+		
 		baseReflectance = mix(vec3(f0), rawAlbedo, metalness);
 		float fresnel = pow(clamp(1.0 + dot(newNormal, normalize(viewPos.xyz)), 0.0, 1.0), 5.0);
 
@@ -368,6 +363,8 @@ void main() {
 		if(blockEntityId == 10205) albedo.a = sqrt(albedo.a);
 		#endif
 	}
+	// Inside the main function of the fragment shader
+	
 		if (blockEntityId == 10401) {
 		vec2 portalCoord = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
 		portalCoord = (portalCoord - 0.5) * vec2(aspectRatio, 1.0);
@@ -421,6 +418,7 @@ void main() {
 	if (blockEntityId == 10109){
 		albedo.rgb = vec3(0.5,0.5,1.0);
 	}
+
 
     /* DRAWBUFFERS:0 */
     gl_FragData[0] = albedo;
@@ -544,7 +542,7 @@ void main() {
 
 	const vec2 sunRotationData = vec2(cos(sunPathRotation * 0.01745329251994), -sin(sunPathRotation * 0.01745329251994));
 	float ang = fract(timeAngle - 0.25);
-	ang = (ang + (cos(ang * 3.14159265358979) * -0.5 + 0.5 - ang) / 3.0) * 6.28318530717959;
+	ang = (ang + (cos(ang * 3.14159265358979) * 0.5 + 0.5 - ang) / 3.0) * 6.28318530717959;
 	sunVec = normalize((gbufferModelView * vec4(vec3(-sin(ang), cos(ang) * sunRotationData) * 2000.0, 1.0)).xyz);
 
 	upVec = normalize(gbufferModelView[1].xyz);

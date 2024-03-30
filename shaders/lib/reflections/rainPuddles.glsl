@@ -19,14 +19,15 @@ vec2 getpos(vec2 i){
 }
 
 float GetRipple(vec3 worldPos, vec2 offset) {
-	vec2 ppos = worldPos.xz + offset * 0.1 + frametime * 0.01;
-    ppos = vec2(ppos.x * 0.7 + ppos.y * 0.7, ppos.x * -0.7 +  ppos.y * 0.7) * 0.8;
-    vec2 ppossh = ppos + vec2(fract(0.618 * floor(ppos.y)) * sin(frametime * 0.05), 0.0);
-    vec2 pposfr = fract(ppossh);
-    vec2 pposfl = floor(ppossh);
-	
-	float val = texture2D(noisetex, ppos / 128.0 + frametime * 0.007).r * 0.35;
-	val += texture2D(noisetex, ppos / 128.0 - frametime * 0.005).r * 0.35;
+    vec2 ppos = worldPos.xz + offset * 0.1 + frametime * 0.01;
+    ppos = vec2(ppos.x * 0.7 + ppos.y * 0.7, ppos.x * -0.7 + ppos.y * 0.7) * 0.8;
+    ppos += vec2(fract(0.618 * floor(ppos.y)) * sin(frametime * 0.05), 0.0);
+
+    vec2 pposfr = fract(ppos);
+    vec2 pposfl = floor(ppos);
+
+    float val = texture2D(noisetex, ppos / 128.0 + frametime * 0.007).r * 0.35;
+    val += texture2D(noisetex, ppos / 128.0 - frametime * 0.005).r * 0.35;
 
     float seed = rand(pposfl);
     float rippleTime = frametime * 1.7 + fract(seed * 1.618);
@@ -35,11 +36,11 @@ float GetRipple(vec3 worldPos, vec2 offset) {
     float ripple = clamp(1.0 - 4.0 * length(pposfr - ripplePos), 0.0, 1.0);
     ripple = clamp(ripple + fract(rippleTime) - 1.0, 0.0, 1.0);
     ripple = sin(min(ripple * 6.0 * 3.1415, 3.0 * 3.1415)) * pow(1.0 - fract(rippleTime), 2.0);
-    val += ripple * 0.3;
+    val += ripple * 0.9;
 
-    //if(pposfr.x < 0.01 || pposfr.y < 0.01) val += 0.85;
+    if (pposfr.x < 0.01 || pposfr.y < 0.01) val += 0.85;
 
-	return val;
+    return val;
 }
 
 vec3 GetPuddleNormal(vec3 worldPos, vec3 viewPos, mat3 tbn) {

@@ -1,5 +1,3 @@
-
-
 //Settings//
 #include "/lib/settings.glsl"
 
@@ -96,7 +94,7 @@ vec3 lightVec = sunVec * ((timeAngle < 0.5325 || timeAngle > 0.9675) ? 1.0 : -1.
 
 //Common Functions//
 float GetLuminance(vec3 color) {
-	return dot(color,vec3(0.299, 0.587, 0.114));
+    return dot(color,vec3(0.299, 0.587, 0.114));
 }
 
 float GetWaterHeightMap(vec3 worldPos, vec2 offset) {
@@ -104,62 +102,62 @@ float GetWaterHeightMap(vec3 worldPos, vec2 offset) {
     
     vec2 wind = vec2(frametime) * 0.5 * WATER_SPEED;
 
-	worldPos.xz += worldPos.y * 0.2;
+    worldPos.xz += worldPos.y * 0.2;
 
-	#if WATER_NORMALS == 1
-	offset /= 256.0;
-	float noiseA = texture2D(noisetex, (worldPos.xz - wind) / 256.0 + offset).g;
-	float noiseB = texture2D(noisetex, (worldPos.xz + wind) / 48.0 + offset).g;
-	#elif WATER_NORMALS == 2
-	offset /= 256.0;
-	float noiseA = texture2D(noisetex, (worldPos.xz - wind) / 256.0 + offset).r;
-	float noiseB = texture2D(noisetex, (worldPos.xz + wind) / 96.0 + offset).r;
-	noiseA *= noiseA; noiseB *= noiseB;
-	#endif
-	
-	#if WATER_NORMALS > 0
-	noise = mix(noiseA, noiseB, WATER_DETAIL);
-	#endif
+    #if WATER_NORMALS == 1
+    offset /= 256.0;
+    float noiseA = texture2D(noisetex, (worldPos.xz - wind) / 256.0 + offset).g;
+    float noiseB = texture2D(noisetex, (worldPos.xz + wind) / 48.0 + offset).g;
+    #elif WATER_NORMALS == 2
+    offset /= 256.0;
+    float noiseA = texture2D(noisetex, (worldPos.xz - wind) / 256.0 + offset).r;
+    float noiseB = texture2D(noisetex, (worldPos.xz + wind) / 96.0 + offset).r;
+    noiseA *= noiseA; noiseB *= noiseB;
+    #endif
+    
+    #if WATER_NORMALS > 0
+    noise = mix(noiseA, noiseB, WATER_DETAIL);
+    #endif
 
     return noise * WATER_BUMP;
 }
 
 vec3 GetParallaxWaves(vec3 worldPos, vec3 viewVector) {
-	vec3 parallaxPos = worldPos;
-	
-	for(int i = 0; i < 4; i++) {
-		float height = -1.25 * GetWaterHeightMap(parallaxPos, vec2(0.0)) + 3;
-		parallaxPos.xz += height * viewVector.xy / dist;
-	}
-	return parallaxPos;
+    vec3 parallaxPos = worldPos;
+    
+    for(int i = 0; i < 4; i++) {
+        float height = -1.25 * GetWaterHeightMap(parallaxPos, vec2(0.0)) + 3;
+        parallaxPos.xz += height * viewVector.xy / dist;
+    }
+    return parallaxPos;
 }
 
 vec3 GetWaterNormal(vec3 worldPos, vec3 viewPos, vec3 viewVector) {
-	vec3 waterPos = worldPos + cameraPosition;
+    vec3 waterPos = worldPos + cameraPosition;
 
-	#if WATER_PIXEL > 0
-	waterPos = floor(waterPos * WATER_PIXEL) / WATER_PIXEL;
-	#endif
+    #if WATER_PIXEL > 0
+    waterPos = floor(waterPos * WATER_PIXEL) / WATER_PIXEL;
+    #endif
 
-	#ifdef WATER_PARALLAX
-	waterPos = GetParallaxWaves(waterPos, viewVector);
-	#endif
+    #ifdef WATER_PARALLAX
+    waterPos = GetParallaxWaves(waterPos, viewVector);
+    #endif
 
-	float normalOffset = WATER_SHARPNESS;
-	
-	float fresnel = pow(clamp(1.0 + dot(normalize(normal), normalize(viewPos)), 0.0, 1.0), 8.0);
-	float normalStrength = 0.35 * (1.0 - fresnel);
+    float normalOffset = WATER_SHARPNESS;
+    
+    float fresnel = pow(clamp(1.0 + dot(normalize(normal), normalize(viewPos)), 0.0, 1.0), 8.0);
+    float normalStrength = 0.35 * (1.0 - fresnel);
 
-	float h1 = GetWaterHeightMap(waterPos, vec2( normalOffset, 0.0));
-	float h2 = GetWaterHeightMap(waterPos, vec2(-normalOffset, 0.0));
-	float h3 = GetWaterHeightMap(waterPos, vec2(0.0,  normalOffset));
-	float h4 = GetWaterHeightMap(waterPos, vec2(0.0, -normalOffset));
+    float h1 = GetWaterHeightMap(waterPos, vec2( normalOffset, 0.0));
+    float h2 = GetWaterHeightMap(waterPos, vec2(-normalOffset, 0.0));
+    float h3 = GetWaterHeightMap(waterPos, vec2(0.0,  normalOffset));
+    float h4 = GetWaterHeightMap(waterPos, vec2(0.0, -normalOffset));
 
-	float xDelta = (h2 - h1) / normalOffset;
-	float yDelta = (h4 - h3) / normalOffset;
+    float xDelta = (h2 - h1) / normalOffset;
+    float yDelta = (h4 - h3) / normalOffset;
 
-	vec3 normalMap = vec3(xDelta, yDelta, 1.0 - (xDelta * xDelta + yDelta * yDelta));
-	return normalMap * normalStrength + vec3(0.0, 0.0, 1.0 - normalStrength);
+    vec3 normalMap = vec3(xDelta, yDelta, 1.0 - (xDelta * xDelta + yDelta * yDelta));
+    return normalMap * normalStrength + vec3(0.0, 0.0, 1.0 - normalStrength);
 }
 
 //Includes//
@@ -430,6 +428,7 @@ void main() {
 			#if REFLECTION == 2
 			reflection = SimpleReflection(viewPos, newNormal, dither, reflectionMask);
 			reflection.rgb = pow(reflection.rgb * 2.0, vec3(8.0));
+
 			#endif
 			
 			if (reflection.a < 1.0) {
@@ -497,7 +496,8 @@ void main() {
 			albedo.rgb = mix(albedo.rgb, reflection.rgb, fresnel);
 			albedo.a = mix(albedo.a, 1.0, fresnel);
 			#endif
-		}else{
+		}else
+		     {
 			#ifdef ADVANCED_MATERIALS
 			skyOcclusion = lightmap.y;
 			#if REFLECTION_SKY_FALLOFF > 1
@@ -750,9 +750,8 @@ void main() {
 	mat = 0.0;
 	
 	if (mc_Entity.x == 10300 || mc_Entity.x == 10304 || mc_Entity.x == 10048) mat = 1.0;
-	if (mc_Entity.x == 10301)						  mat = 0.0;
-	if (mc_Entity.x == 10302) 						  mat = 3.0;
-
+	if (mc_Entity.x == 10301 || mc_Entity.x == 10879)	mat = 3.0;
+	if (mc_Entity.x == 10302) 	mat = 3.0;
 
 	const vec2 sunRotationData = vec2(
 		 cos(sunPathRotation * 0.01745329251994),
@@ -769,7 +768,7 @@ void main() {
 	
 	#ifdef WAVING_WATER
 	float istopv = gl_MultiTexCoord0.t < mc_midTexCoord.t ? 1.0 : 0.0;
-	if (mc_Entity.x == 10300 || mc_Entity.x == 10302 || mc_Entity.x == 10304 ) position.y += WavingWater(position.xyz);
+	if (mc_Entity.x == 10300 || mc_Entity.x == 10302 || mc_Entity.x == 10304) position.y += WavingWater(position.xyz);
 	
 	#endif
 

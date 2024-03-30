@@ -64,10 +64,8 @@ vec3 SampleShadow(vec3 shadowPos, float subsurface, int samples) {
 }
 
 vec3 GetShadow(vec3 worldPos, float NoL, float subsurface, float skylight) {
-    #if SHADOW_PIXEL > 0
     worldPos = (floor((worldPos + cameraPosition) * SHADOW_PIXEL + 0.01) + 0.5) /
                SHADOW_PIXEL - cameraPosition;
-    #endif
 
     vec3 shadowPos = ToShadow(worldPos);
 

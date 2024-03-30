@@ -575,6 +575,7 @@ void main() {
 
 		color.rgb = finalColor;
 	}
+	// brewing stands
 	if (mc_Entity.x == 10210) {
 		color.rgb *= 1.15;
 	}
@@ -584,28 +585,15 @@ void main() {
 	if (mc_Entity.x == 10212) {
 		color.rgb *= 1.35;
 	}
-	
-	if (mc_Entity.x == 10219){
-    vec3 oreColor = vec3(1.0, 1.0 , 1.0);
-    float lightIntensity = 0.000001; 
-    color.rgb += oreColor * lightIntensity; 
-	}
+	// end stads
 	if (mc_Entity.x == 10220){
     vec3 oreColor = vec3(1.0, 1.0 , 1.0); 
     float lightIntensity = .5;
     color.rgb += oreColor * lightIntensity;
 	}
-		if (mc_Entity.x == 10213 || mc_Entity.x == 10212 || mc_Entity.x == 10214 || mc_Entity.x == 10215 || mc_Entity.x == 10216 || mc_Entity.x == 10217 || mc_Entity.x == 10218 ) {
-		float lightIntensity = texture2D(lightmap, lmCoord).r;
-		float reflectionScale = 0.7; 
-		float baseBrightness = 0.2;
-		float adjustedLightIntensity = max(lightIntensity * reflectionScale, baseBrightness);
-		
-		color.rgb *= vec3(adjustedLightIntensity);
-		color.rgb = max(color.rgb, vec3(0.1));
-	}
+
 	if ( mc_Entity.x == 10046){
-			color.rgb *= 1.2;
+			color.rgb *= 1.0;
 	}
 
 	if ( mc_Entity.x == 10048){
