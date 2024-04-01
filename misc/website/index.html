@@ -1,52 +1,138 @@
 <!DOCTYPE html>
-<body>
-<h1 class="title"> Beyond Vinlla - Minecraft shader</h1>
-<div class="intro-containter">
-    <div>
-        <h2>Hello! </h2>
-        <p>Thanks for checking out my shader!</p>
-        <p>For other people who are wondering what this is you can check out the images below to get a taste of what its like</p>
-        <button onclick="showDiv()" class="image-button">Click to show images</button>
-    </div>
-</div>
-
-<div class="testdiv" style="display: none;" id="testdiv">
-  <img class="image" src="../assets/2024-03-02_17.41.42.png" alt="Why can you see this.... also coral1">
-  <img class="image" src="../assets/2024-03-04_15.26.03.png" alt="coral2">  
-  <img class="image" src="../assets/2024-03-04_15.26.26.png" alt="coral3">
-  <img class="image" src="../assets/2024-03-04_15.28.24.png" alt="coral4">
-</div>
-</body>
-<style>
-    body {
-    background: linear-gradient(to right, #1c1c1d, #182848);
-    font-family: 'Arial', sans-serif;
-    color: aliceblue;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyond Vanilla Shader</title>
+  <style>
+    /* Reset CSS */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     
-  }
-  .intro-containter , .title{
-    text-align: center;
-  }
-  .image{
-    width: auto;
-    height: auto;
-    border-radius: 2%;
-  }
-  .image-button{
-    width: 150px;
-    height: 40px;
-    border-radius: 7%;
-    background-color: #3498db;
-    color: #fff;
-    padding: 8px 15px;
-    font-size: 0.9em;
-    transition: background-color 0.3s;
-  }
-</style>
-<script>
-  function showDiv(){
-    var div = document.getElementById("testdiv")
-    div.style.display = "block"
-  }
-</script>
- 
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #16181c;
+      color: aliceblue;
+      line-height: 1.6;
+    }
+    
+    #shader-website {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #16181c;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1, h2, p {
+      margin-bottom: 15px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      color: #333;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      color: #555;
+    }
+    
+    p {
+      font-size: 1.2rem;
+    }
+    
+    ul, ol {
+      margin-bottom: 15px;
+    }
+    
+    li {
+      margin-bottom: 5px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #0056b3;
+    }
+    
+    img {
+      display: block;
+      margin: 15px 0;
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div id="shader-website">
+    <h1>Beyond Vanilla Shader</h1>
+    
+    <p>Hey there! Welcome to the coolest place for shaders - Beyond Vanilla!</p>
+    
+    <h2>About the Shader</h2>
+    
+    <p>So, here's the deal with Beyond Vanilla - it's like adding a sprinkle of magic to your Minecraft world! Think real-looking shadows, reflections that make you go 'whoa', and lighting effects so advanced, it's like playing in a Hollywood movie set!</p>
+    
+    <ul>
+      <li>Realistic shadows</li>
+      <li>Reflections that'll make you do a double-take</li>
+      <li>Lighting effects that are next level</li>
+      <li>Textures so high-res, you'll feel like you can touch them</li>
+    </ul>
+    
+    <h2>Get Your Hands on It!</h2>
+    
+    <p>Ready to amp up your Minecraft experience? Grab the latest version of Beyond Vanilla right here:</p>
+    <form action="https://modrinth.com/shader/beyond-vanilla">
+      <button type="submit">Let's Go!</button>
+    </form>
+    
+    <h2>How to Install</h2>
+    
+    <ol>
+      <li>Download the <code>beyond-vanilla.zip</code> file</li>
+      <li>Open your Minecraft shaders folder</li>
+      <li>Unzip the <code>beyond-vanilla.zip</code> contents into the shaders folder</li>
+      <li>Fire up Minecraft and head to Options > Video Settings</li>
+      <li>From the Shaders dropdown, pick Beyond Vanilla</li>
+      <li>Click Done and get ready to be blown away!</li>
+    </ol>
+    
+    <h2>Sneak a Peek!</h2>
+    
+    <img src="../assets/2024-03-04_15.28.24.png" alt="Screenshot 1">
+    <img src="../assets/2024-03-02_17.41.42.png" alt="Screenshot 2">
+    
+    <h2>Compatibility</h2>
+    
+    <p>Just so you know, Beyond Vanilla plays best with Minecraft 1.14 and up. So make sure you're up-to-date before diving in!</p>
+    
+    <p>Got any questions or need a hand? Hit me up by opening an issue <a
+        href="https://github.com/hotsu0p/beyond-vanilla/issues">here</a>!</p>
+
+  </div>
+</body>
+</html>
