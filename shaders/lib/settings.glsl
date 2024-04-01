@@ -35,7 +35,7 @@ Please don't edit anything from Undefine section and onwards.
   #define SHADOW_ENTITY
   #define SHADOW_BLOCK_ENTITY
   #define SHADOW_VEGETATION
-  #define SHADOW_PIXEL 0 //[0 16 32 64 128]
+  #define SHADOW_PIXEL 128 //[0 16 32 64 128]
 
   #define AO
   #define AO_STRENGTH 2.00 //[0.25 0.50 0.75 1.00 1.25 1.50 1.75 2.00]

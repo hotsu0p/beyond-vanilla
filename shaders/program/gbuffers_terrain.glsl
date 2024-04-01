@@ -1,5 +1,3 @@
-
-
 //Settings//
 #include "/lib/settings.glsl"
 
@@ -506,7 +504,9 @@ void main() {
 	color = gl_Color;
 	
 	mat = 0.0; recolor = 0.0;
-
+	if (mc_Entity.x == 10879){
+		
+	}
 	if (mc_Entity.x >= 10100 && mc_Entity.x < 10200)
 		mat = 1.0;
 	if (mc_Entity.x == 10105 || mc_Entity.x == 10106){
@@ -534,7 +534,7 @@ void main() {
     color.rgb *= 1.5;
     emission = 1.0;
 	}
-
+	
 	if (mc_Entity.x == 10289){
 		float randomFactor = hash(frameTimeCounter);
 
@@ -620,6 +620,10 @@ void main() {
 		color.rgb = finalColor;
 	}
 	
+
+	
+
+
  	if (color.a < 0.1)
 		color.a = 1.0;
 

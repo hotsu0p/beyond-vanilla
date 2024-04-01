@@ -343,8 +343,8 @@ void main() {
 
 		float NoU = clamp(dot(newNormal, upVec), -1.0, 1.0);
 		float NoE = clamp(dot(newNormal, eastVec), -1.0, 1.0);
-		float vanillaDiffuse = (0.25 * NoU + 0.75) + (0.667 - abs(NoE)) * (1.0 - abs(NoU)) * 0.15;
-			  vanillaDiffuse*= vanillaDiffuse;
+		float vanillaDiffuse = (0.25 * NoU + 0.75) + (0.667 - abs(NoE)) * (1.0 - abs(NoU)) * 0.15; 
+      vanillaDiffuse*= vanillaDiffuse;
 
 		float parallaxShadow = 1.0;
 		#ifdef ADVANCED_MATERIALS
@@ -742,7 +742,7 @@ void main() {
 	
 	vTexCoord.xy    = sign(texMinMidCoord) * 0.5 + 0.5;
 	#endif
-    
+
 	color = gl_Color;
 
 	if(color.a < 0.1) color.a = 1.0;
@@ -751,15 +751,16 @@ void main() {
 	
 	if (mc_Entity.x == 10300 || mc_Entity.x == 10304 || mc_Entity.x == 10048) mat = 1.0;
 	if (mc_Entity.x == 10301 || mc_Entity.x == 10879)	mat = 3.0;
-	if (mc_Entity.x == 10302) 	mat = 3.0;
-
+	if (mc_Entity.x == 10302 || mc_Entity.x == 10105) 	mat = 3.0;
 	const vec2 sunRotationData = vec2(
-		 cos(sunPathRotation * 0.01745329251994),
-		-sin(sunPathRotation * 0.01745329251994)
+     cos(sunPathRotation * 0.01745329251994),
+    -sin(sunPathRotation * 0.01745329251994)
 	);
-	float ang = fract(timeAngle - 0.25);
-	ang = (ang + (cos(ang * 3.14159265358979) * -0.5 + 0.5 - ang) / 3.0) * 6.28318530717959;
-	sunVec = normalize((gbufferModelView * vec4(vec3(-sin(ang), cos(ang) * sunRotationData) * 2000.0, 1.0)).xyz);
+
+float ang = fract(timeAngle - 0.25); 
+ang = (ang + (cos(ang * 3.14159265358979) * -0.5 + 0.5 - ang) / 3.0) * 6.28318530717959;
+
+sunVec = normalize((gbufferModelView * vec4(vec3(-sin(ang), cos(ang) * sunRotationData) * 2000.0, 1.0)).xyz);
 
 	upVec = normalize(gbufferModelView[1].xyz);
 	eastVec = normalize(gbufferModelView[0].xyz);
